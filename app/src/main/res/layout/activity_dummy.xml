@@ -60,4 +60,23 @@
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/lv1"
         android:layout_marginStart="31dp" />
+
+    <EditText
+        android:id="@+id/txt_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="216dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Add Info!" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_info"
+        android:layout_toEndOf="@+id/btn_signUp"
+        android:text="Submit" />
 </RelativeLayout>
