@@ -29,6 +29,12 @@ public class DUMMY extends AppCompatActivity {
 
     private ArrayList<String> phrases;
     private ListView lv1;
+    private FirebaseUser user;
+    private FirebaseAuth userAuth;
+    private Button btn_signUp,btn_logIn,btn_submit,btn_logout;
+    private TextView txt_user,txt_info;
+    private FirebaseDatabase firebaseDBInstance;
+    private DatabaseReference firebaseReferenceUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,22 +42,23 @@ public class DUMMY extends AppCompatActivity {
         setContentView(R.layout.activity_dummy);
 
         //User Init
-        FirebaseAuth userAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = userAuth.getCurrentUser();
+        userAuth = FirebaseAuth.getInstance();
+        user = userAuth.getCurrentUser();
 
 
         //Database Init
-        FirebaseDatabase firebaseDBInstance = FirebaseDatabase.getInstance();
+        firebaseDBInstance = FirebaseDatabase.getInstance();
         DatabaseReference firebaseReferenceOne = firebaseDBInstance.getReference("one");
         DatabaseReference firebaseReferencePublic = firebaseDBInstance.getReference("public");
 
 
         //Screen Elements
-        Button btn_signUp = findViewById(R.id.btn_signUp);
-        Button btn_logIn = findViewById(R.id.btn_logIn);
-        Button btn_submit = findViewById(R.id.btn_submit);
-        TextView txt_user = findViewById(R.id.txt_user);
-        TextView txt_info = findViewById(R.id.txt_info);
+        btn_signUp = findViewById(R.id.btn_signUp);
+        btn_logIn = findViewById(R.id.btn_logIn);
+        btn_submit = findViewById(R.id.btn_submit);
+        btn_logout = findViewById(R.id.btn_logout);
+        txt_user = findViewById(R.id.txt_user);
+        txt_info = findViewById(R.id.txt_info);
         lv1 = findViewById(R.id.lv1);
 
         //List Adapter
@@ -106,14 +113,7 @@ public class DUMMY extends AppCompatActivity {
             }
         });
 
-
-
-        if(user != null){
-            txt_user.setText("Welcome");
-        }else{
-            txt_info.setVisibility(View.INVISIBLE);
-            btn_submit.setVisibility(View.INVISIBLE);
-        }
+        checkUser();
 
         btn_logIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +131,39 @@ public class DUMMY extends AppCompatActivity {
             }
         });
 
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userAuth.signOut();
+                checkUser();
+            }
+        });
 
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        checkUser();
+    }
+
+    private void checkUser() {
+        user = userAuth.getCurrentUser();
+        if(user != null){
+            txt_user.setText("Welcome");
+            txt_info.setVisibility(View.VISIBLE);
+            btn_submit.setVisibility(View.VISIBLE);
+            btn_logout.setVisibility(View.VISIBLE);
+            btn_signUp.setVisibility(View.INVISIBLE);
+            btn_logIn.setVisibility(View.INVISIBLE);
+        }else{
+            txt_user.setText("Not Logged In");
+            txt_info.setVisibility(View.INVISIBLE);
+            btn_submit.setVisibility(View.INVISIBLE);
+            btn_logout.setVisibility(View.INVISIBLE);
+            btn_signUp.setVisibility(View.VISIBLE);
+            btn_logIn.setVisibility(View.VISIBLE);
+        }
+    }
+
 }
