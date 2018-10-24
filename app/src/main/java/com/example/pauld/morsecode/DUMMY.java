@@ -2,6 +2,7 @@ package com.example.pauld.morsecode;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,18 +25,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DUMMY extends AppCompatActivity {
 
     private ArrayList<String> phrases;
-    private ListView lv1;
+    private ListView lv1,lv2;
     private FirebaseUser user;
     private FirebaseAuth userAuth;
     private Button btn_signUp,btn_logIn,btn_submit,btn_logout;
     private TextView txt_user,txt_info;
     private FirebaseDatabase firebaseDBInstance;
     private DatabaseReference firebaseReferenceUser;
+    private Map<String, Object> userInfo;
+    private ArrayList<String> userInfoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,7 @@ public class DUMMY extends AppCompatActivity {
         txt_user = findViewById(R.id.txt_user);
         txt_info = findViewById(R.id.txt_info);
         lv1 = findViewById(R.id.lv1);
+        lv2 = findViewById(R.id.lv2);
 
         //List Adapter
         phrases = new  ArrayList<String>();
@@ -139,6 +148,17 @@ public class DUMMY extends AppCompatActivity {
             }
         });
 
+        //NOTE: submit is only visible if the user is logged in and therefore firebaseReferenceUser is set
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               String key = firebaseReferenceUser.child("info").push().getKey();
+               Map<String, Object> updates = new HashMap<>();
+               updates.put("/info/"+key,txt_info.getText().toString());
+               firebaseReferenceUser.updateChildren(updates);
+            }
+        });
+
     }
 
     @Override
@@ -147,10 +167,69 @@ public class DUMMY extends AppCompatActivity {
         checkUser();
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        userAuth.signOut();
+    }
+
     private void checkUser() {
         user = userAuth.getCurrentUser();
+
         if(user != null){
-            txt_user.setText("Welcome");
+            lv2.setVisibility(View.VISIBLE);
+            firebaseReferenceUser = firebaseDBInstance.getReference("users").child(user.getUid());
+            firebaseReferenceUser.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for( DataSnapshot D : dataSnapshot.getChildren() ){
+                        if(D.getKey().equals("name")){
+                            txt_user.setText("Welcome "+D.getValue());
+                        }
+                        if(D.getKey().equals("info")){
+                            userInfo = new HashMap<>();
+                            userInfoList = new ArrayList<>();
+                            for(DataSnapshot childInfo : D.getChildren()){
+                                userInfo.put(childInfo.getKey(),childInfo.getValue());
+                                userInfoList.add(childInfo.getValue().toString());
+                            }
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                                    android.R.layout.simple_list_item_1, userInfoList) {
+                                @Override
+                                public View getView(int position, View convertView, ViewGroup parent) {
+                                    View view = super.getView(position, convertView, parent);
+                                    TextView t = (TextView) view.findViewById(android.R.id.text1);
+                                    t.setTextColor(Color.BLACK);
+                                    return view;
+                                }
+                            };
+                            lv2.setAdapter(adapter);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+
+            });
+
+            lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    TextView tv = (TextView) view;
+                    for(String key : userInfo.keySet()){
+                        Log.d("SINGLETAG",userInfo.get(key).toString());
+                        if(userInfo.get(key).toString().equals(tv.getText().toString())){
+                            Log.d("SINGLETAG",key);
+                            firebaseReferenceUser.child("info").child(key).removeValue();
+                            return;
+                        }
+                    }
+                }
+            });
+
+
             txt_info.setVisibility(View.VISIBLE);
             btn_submit.setVisibility(View.VISIBLE);
             btn_logout.setVisibility(View.VISIBLE);
@@ -163,6 +242,7 @@ public class DUMMY extends AppCompatActivity {
             btn_logout.setVisibility(View.INVISIBLE);
             btn_signUp.setVisibility(View.VISIBLE);
             btn_logIn.setVisibility(View.VISIBLE);
+            lv2.setVisibility(View.INVISIBLE);
         }
     }
 
