@@ -7,22 +7,22 @@
         <item
             android:id="@+id/nav_login"
 
-            android:title="LoginScreen" />
+            android:title="@string/LoginScreenNav" />
         <!-- android:icon="@drawable/ic_menu_camera" -->
         <item
             android:id="@+id/nav_inputout"
 
-            android:title="InputOutput" />
+            android:title="@string/InputOutputNav" />
         <!-- android:icon="@drawable/ic_menu_gallery" -->
         <item
-            android:id="@+id/nav_trainingScreen_1"
+            android:id="@+id/nav_trainingScreen"
 
-            android:title="TrainingScreen_1" />
+            android:title="@string/TrainingScreenNav" />
         <!-- android:icon="@drawable/ic_menu_slideshow" -->
         <item
             android:id="@+id/nav_chatScreen"
 
-            android:title="ChatScreen" />
+            android:title="@string/ChatScreenNav" />
         <!--  android:icon="@drawable/ic_menu_manage" -->
     </group>
 

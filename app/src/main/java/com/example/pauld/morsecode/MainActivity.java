@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_login) {
             // Handle the camera action
-            Intent intent1=new Intent(this,LoginScreen_1.class);
+            Intent intent1=new Intent(this,LoginActivity.class);
             this.startActivity(intent1);
             return true;
         } else if (id == R.id.nav_inputout) {
@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity
             this.startActivity(intent1);
             return true;
 
-        } else if (id == R.id.nav_trainingScreen_1) {
-            Intent intent1=new Intent(this,TrainingScreen.class);
+        } else if (id == R.id.nav_trainingScreen) {
+            Intent intent1=new Intent(this,training_screen_landing_page.class);
             this.startActivity(intent1);
             return true;
 
