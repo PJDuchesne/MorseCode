@@ -18,7 +18,6 @@ import org.w3c.dom.Text;
 import java.util.StringTokenizer;
 
 public class TrainingScreen extends AppCompatActivity{
-
     private String lessonString, currentWordStr, currentLetterStr;
     private StringTokenizer lessonTokens;
     private TextView currentWord, currentLetter, currentLetterMorse, currentInputLetter, currentInputLetterMorse;
@@ -52,8 +51,9 @@ public class TrainingScreen extends AppCompatActivity{
 
         Intent intent = getIntent();
 
-        // FOR TESTING: hardcoding the lessonString
-        lessonString = "TEST LESSON";
+        lessonString = intent.getStringExtra("LESSON_STRING");
+        if(lessonString.isEmpty())
+            lessonString = "DEFAULT INPUT LESSON";
         lessonString = lessonString.toUpperCase();
         // Tokenize the lesson by spaces.
         lessonTokens = new StringTokenizer(lessonString, " ");
