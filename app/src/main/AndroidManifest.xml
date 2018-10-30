@@ -19,6 +19,26 @@
         </activity>
         <activity android:name=".BrainTestingActivity">
         </activity>
+        <activity
+            android:name=".LoginScreen_1"
+            android:label="LoginScreen"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".InputOutput"
+            android:label="Input/Output"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ChatScreen"
+            android:label="Chat Screen"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Settings"
+            android:label="Settings"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".TrainingScreen_1"
+            android:label="TrainingScreen_1"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>
