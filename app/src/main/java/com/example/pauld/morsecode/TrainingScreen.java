@@ -2,12 +2,16 @@ package com.example.pauld.morsecode;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.StringTokenizer;
 
@@ -15,11 +19,13 @@ public class TrainingScreen extends AppCompatActivity{
 
     private String lessonString, currentWordStr, currentLetterStr;
     private StringTokenizer lessonTokens;
-    private TextView currentWord, currentLetter, currentLetterMorse, currentInputLetter;
+    private TextView currentWord, currentLetter, currentLetterMorse, currentInputLetter, currentInputLetterMorse;
     private View morseInputButton;
     private Button morseResetButton;
-    private boolean newWord;
+    private boolean newWord, blockInput, completedLesson;
     private int wordCharIndex;
+    private MorseBrain brain;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +35,24 @@ public class TrainingScreen extends AppCompatActivity{
         // Link the TextViews/Buttons
         currentWord = findViewById(R.id.current_training_word);
         currentLetter = findViewById(R.id.current_training_letter);
-        currentLetterMorse = findViewById(R.id.current_morse_input);
+        currentLetterMorse = findViewById(R.id.current_training_letter_morse_code);
         currentInputLetter = findViewById(R.id.current_predicted_letter);
+        currentInputLetterMorse = findViewById(R.id.current_morse_input);
         morseInputButton = findViewById(R.id.training_screen_button);
         morseResetButton = findViewById(R.id.training_screen_reset_button);
+        progressBar = findViewById(R.id.training_progress_bar);
+        blockInput = false;
+        completedLesson = false;
+        TextView tempTextView = findViewById(R.id.temptextview);
+
+        brain = new MorseBrain(this, currentInputLetterMorse, currentInputLetter, tempTextView, progressBar);
+        brain.ElectricShock();
 
         Intent intent = getIntent();
 
         // FOR TESTING: hardcoding the lessonString
-        lessonString = "ABC B C D E F G";
-        lessonString.toUpperCase();
+        lessonString = "TEST LESSON";
+        lessonString = lessonString.toUpperCase();
         // Tokenize the lesson by spaces.
         lessonTokens = new StringTokenizer(lessonString, " ");
         gotoNextWord(); // Get first word
@@ -46,11 +60,15 @@ public class TrainingScreen extends AppCompatActivity{
         morseInputButton.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent){
+                if(blockInput || completedLesson)
+                    return true;
                 switch(motionEvent.getAction()){
                     case MotionEvent.ACTION_DOWN:
-
+                        brain.StartInput();
                         break;
                     case MotionEvent.ACTION_UP:
+                        brain.EndInput();
+                        checkInput();
                         break;
                 }
                 return true;
@@ -60,7 +78,7 @@ public class TrainingScreen extends AppCompatActivity{
         morseResetButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-
+                resetButtonInput();
             }
         });
 
@@ -84,32 +102,54 @@ public class TrainingScreen extends AppCompatActivity{
             wordCharIndex = 0;
             newWord = false;
         }
-        if(wordCharIndex == currentWordStr.length() - 1){
+        if(wordCharIndex == currentWordStr.length()){
             wordCompleted();
             return;
         }
         currentLetterStr = currentWordStr.substring(wordCharIndex, wordCharIndex + 1);
         wordCharIndex++;
         currentLetter.setText(currentLetterStr);
-        currentLetterMorse.setText(getMorseString(currentLetterStr.charAt(0)));
+        currentLetterMorse.setText(getMorseString(currentLetterStr));
         resetButtonInput();
     }
 
-    private void wordCompleted(){
+    private void checkInput(){
+        if(currentInputLetter.getText().equals(currentLetterStr)){
+            blockInput = true;
+            final Handler delayHandler = new Handler();
+            delayHandler.postDelayed(new Runnable(){
+                @Override
+                public void run(){
+                    gotoNextLetter();
+                    resetButtonInput();
+                    blockInput = false;
+                }
+            }, 225);
+        }
+    }
 
+    private void wordCompleted(){
+        gotoNextWord();
     }
 
     private void resetButtonInput(){
-        // TODO Reset the brain.
+        brain.ElectricShock();
     }
 
     private void lessonCompleted(){
-
+        completedLesson = true;
+        currentLetter.setText("Lesson");
+        currentLetterMorse.setText("Complete!");
+        currentWord.setText("");
+        resetButtonInput();
     }
 
-    private String getMorseString(char character){
-        // TODO ACTUALLY IMPLEMENT A LOOKUP TABLE
-        return "-.-.-";
+    private String getMorseString(String character){
+        String retString = MorseCodeStandards.GiveLetterGetMorse(character);
+        if(retString.equals("~")){
+            return "ERROR";
+        }
+        return retString;
     }
 
     @Override

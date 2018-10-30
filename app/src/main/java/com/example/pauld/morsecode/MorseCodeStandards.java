@@ -140,7 +140,7 @@ public class MorseCodeStandards {
             {"9", ""}
     };
 
-    public String GiveLetterGetMorse(String inputCharButActuallyString) {
+    static public String GiveLetterGetMorse(String inputCharButActuallyString) {
         int tmpIndex = GetRowNotSpecial(Character.toUpperCase(inputCharButActuallyString.charAt(0)));
 
         if (tmpIndex != -1) return InternationalStandard[tmpIndex][1];

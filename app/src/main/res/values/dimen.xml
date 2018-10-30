@@ -10,4 +10,8 @@
     <dimen name="TrainingResetButtonMargins">20dp</dimen>
     <dimen name="TrainingResetButtonTextSize">20sp</dimen>
     <dimen name="TrainingMorseInputMarginBottom">35dp</dimen>
+    <dimen name="TrainingMorseProgressBarWidth">250dp</dimen>
+    <dimen name="TrainingMorseProgressBarHeight">20dp</dimen>
+    <dimen name="TrainingMorseProgressBarMarginBottom">30dp</dimen>
+    <dimen name="TrainingMorseProgressBarMarginLeft">20dp</dimen>
 </resources>

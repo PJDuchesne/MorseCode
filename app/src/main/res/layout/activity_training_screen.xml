@@ -89,4 +89,21 @@
         android:textSize="@dimen/TrainingResetButtonTextSize"
         android:background="@drawable/training_screen_circular_reset_button"/>
 
+    <TextView
+        android:id="@+id/temptextview"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+
+    <ProgressBar
+        android:id="@+id/training_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="@dimen/TrainingMorseProgressBarWidth"
+        android:layout_height="@dimen/TrainingMorseProgressBarHeight"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:max="100"
+        android:progress="0"
+        android:layout_marginBottom="@dimen/TrainingMorseProgressBarMarginBottom"
+        android:layout_marginLeft="@dimen/TrainingMorseProgressBarMarginLeft"/>
+
 </RelativeLayout>
