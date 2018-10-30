@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class BrainTestingActivity extends AppCompatActivity {
     private MorseBrain brain;
     private View circleView, testView, resetView;
     private TextView currentMorseTextView, currentCharTextView, overallCharsTextView;
+    private ProgressBar currentProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +49,12 @@ public class BrainTestingActivity extends AppCompatActivity {
         testView                = findViewById(R.id.testView);
         resetView               = findViewById(R.id.resetView);
         circleView              = findViewById(R.id.inputCircle);
+        currentProgressBar      = findViewById(R.id.progressBar);
         currentMorseTextView    = findViewById(R.id.currentMorseTextView);
         currentCharTextView     = findViewById(R.id.currentCharTextView);
         overallCharsTextView    = findViewById(R.id.overallCharsTextView);
 
-        brain = new MorseBrain(this, currentMorseTextView, currentCharTextView, overallCharsTextView);
+        brain = new MorseBrain(this, currentMorseTextView, currentCharTextView, overallCharsTextView, currentProgressBar);
 
         circleView.setOnTouchListener(new View.OnTouchListener() {
             @Override

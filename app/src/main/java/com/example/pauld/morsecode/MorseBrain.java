@@ -1,9 +1,14 @@
 package com.example.pauld.morsecode;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +23,7 @@ public class MorseBrain {
     private interCharTask charTask;
     private interWordTask wordTask;
     private Handler uiHandler; // To allow the timer thread to change textViews
+    private ObjectAnimator progressAnimation;
 
     // Settings
     private boolean EndOfWordTaskOn;
@@ -32,13 +38,15 @@ public class MorseBrain {
     private MorseTrie InternationalStandardTrie;
     private TextView morseTextView, charTextView, overallTextView;
     private Context parentContext;
+    private ProgressBar progressBar;
 
     // TODO: Add input variable to change standard
-    public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView, TextView inputOverallTextView) {
+    public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView, TextView inputOverallTextView, ProgressBar inputProgressBar) {
         InternationalStandardTrie = new MorseTrie(MorseCodeStandards.InternationalStandard);
         morseTextView = inputMorseTextView;
         charTextView = inputCharTextView;
         overallTextView = inputOverallTextView;
+        progressBar = inputProgressBar;
         morseTimer = new Timer();
         uiHandler = new Handler();
 
@@ -46,6 +54,8 @@ public class MorseBrain {
 
         EndOfWordTaskOn = true;
         EndOfCharTaskOn = false;
+
+        ElectricShock();
     }
 
     // When triggered: Current symbol is over?
@@ -78,7 +88,7 @@ public class MorseBrain {
 
                     lastChar = InternationalStandardTrie.GetCurrentBranch().BranchChar;
 
-                    if (lastChar != null && !lastChar.equals("?")) overallTextView.append(lastChar);
+                    if (lastChar != null && !lastChar.equals("?") && overallTextView != null) overallTextView.append(lastChar);
 
                     InternationalStandardTrie.ResetTrie();
                 }
@@ -100,7 +110,7 @@ public class MorseBrain {
             uiHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    overallTextView.append(" ");
+                    if (overallTextView != null) overallTextView.append(" ");
                 }
             });
         }
@@ -120,9 +130,15 @@ public class MorseBrain {
 
         // Store user input start time
         startInputTime = System.currentTimeMillis();
+
+        // Start progress animation
+        StartProgressBar();
     }
 
     public void EndInput() {
+        // Reset progress bar
+        ResetProgressBar();
+
         MorseTrieBranch tmpBranch;
 
         // Store user input end time
@@ -133,7 +149,7 @@ public class MorseBrain {
             tmpBranch = InternationalStandardTrie.InputDot();
             charTextView.setText(tmpBranch.BranchChar);
             if (tmpBranch.BranchChar.equals("?")) {
-                if (morseTextView.getText().length() <= 10)morseTextView.append(".");
+                if (morseTextView.getText().length() <= 10) morseTextView.append(".");
             }
             else morseTextView.setText(tmpBranch.BranchMorseCode);
         }
@@ -152,7 +168,6 @@ public class MorseBrain {
             Toast.makeText(parentContext, "[Grey Area]: Past Dash length!", Toast.LENGTH_SHORT).show();
         }
 
-
         // Schedule "Space between Word" task
         if (EndOfCharTaskOn) {
             charTask = new interCharTask();
@@ -165,7 +180,8 @@ public class MorseBrain {
         InternationalStandardTrie.ResetTrie();
         morseTextView.setText("");
         charTextView.setText("");
-        overallTextView.setText("");
+        if (overallTextView != null) overallTextView.setText("");
+        ResetProgressBar();
     }
 
     // Purely for debugging
@@ -197,5 +213,17 @@ public class MorseBrain {
         InternationalStandardTrie.ResetTrie();
 
         Log.e("[TestBrain]: ", "Ending Test!");
+    }
+
+    public void StartProgressBar() {
+        progressAnimation = ObjectAnimator.ofInt(progressBar, "Progress", 100);
+        progressAnimation.setDuration(5*timeUnit);
+        progressAnimation.setInterpolator(new LinearInterpolator());
+        progressAnimation.start();
+    }
+
+    public void ResetProgressBar() {
+        if (progressAnimation != null) progressAnimation.cancel();
+        progressBar.setProgress(0);
     }
 }

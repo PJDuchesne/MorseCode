@@ -77,10 +77,13 @@ public class MorseCodeStandards {
         }
 
         if (InputChar == '?') {
-//            return InternationalLength - 1;
             return -1;
         }
 
+        return GetRowNotSpecial(InputChar);
+    }
+
+    public static int GetRowNotSpecial(char InputChar) {
         int InputInt = (int)(Character.toUpperCase(InputChar));
 //        Log.e("[GetRow]: ", "InputInt >>" + InputInt + "<<");
 
@@ -138,4 +141,11 @@ public class MorseCodeStandards {
             {"8", ""},
             {"9", ""}
     };
+
+    public String GiveLetterGetMorse(String inputCharButActuallyString) {
+        int tmpIndex = GetRowNotSpecial(Character.toUpperCase(inputCharButActuallyString.charAt(0)));
+
+        if (tmpIndex != -1) return InternationalStandard[tmpIndex][1];
+        else return "~";
+    }
 }

@@ -15,12 +15,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp" />
 
-    <SeekBar
-        android:id="@+id/timingSlider"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_below="@id/overallCharsTextView"
-        android:max="10"
+        android:max="100"
+        android:progress="0"
         android:layout_centerHorizontal="true"/>
 
     <RelativeLayout
@@ -29,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true">
 
         <View
