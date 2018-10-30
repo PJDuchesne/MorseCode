@@ -1,9 +1,11 @@
 package com.example.pauld.morsecode;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,21 +19,33 @@ public class MorseBrain {
     private interWordTask wordTask;
     private Handler uiHandler; // To allow the timer thread to change textViews
 
+    // Settings
+    private boolean EndOfWordTaskOn;
+    private boolean EndOfCharTaskOn;
+
+    private String lastChar;
+
     // Constants
     private int timeUnit = 100; // In milliseconds, TODO: Pull from settings
 
     // Input variables
     private MorseTrie InternationalStandardTrie;
     private TextView morseTextView, charTextView, overallTextView;
+    private Context parentContext;
 
     // TODO: Add input variable to change standard
-    public MorseBrain(TextView inputMorseTextView, TextView inputCharTextView, TextView inputOverallTextView) {
+    public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView, TextView inputOverallTextView) {
         InternationalStandardTrie = new MorseTrie(MorseCodeStandards.InternationalStandard);
         morseTextView = inputMorseTextView;
         charTextView = inputCharTextView;
         overallTextView = inputOverallTextView;
         morseTimer = new Timer();
         uiHandler = new Handler();
+
+        parentContext = context;
+
+        EndOfWordTaskOn = true;
+        EndOfCharTaskOn = false;
     }
 
     // When triggered: Current symbol is over?
@@ -62,15 +76,18 @@ public class MorseBrain {
                     morseTextView.setText("");
                     charTextView.setText("");
 
-                    overallTextView.append(InternationalStandardTrie.GetCurrentBranch().BranchChar);
-                    Log.e("[interCharTask]", "TEST! >>" + InternationalStandardTrie.GetCurrentBranch().BranchChar + "<<");
+                    lastChar = InternationalStandardTrie.GetCurrentBranch().BranchChar;
+
+                    if (lastChar != null && !lastChar.equals("?")) overallTextView.append(lastChar);
 
                     InternationalStandardTrie.ResetTrie();
                 }
             });
 
-            wordTask = new interWordTask();
-            morseTimer.schedule(wordTask, 4*timeUnit);
+            if (EndOfWordTaskOn & lastChar != null && !lastChar.equals("?")) {
+                wordTask = new interWordTask();
+                morseTimer.schedule(wordTask, 4*timeUnit);
+            }
         }
     }
 
@@ -114,21 +131,41 @@ public class MorseBrain {
         // Add dot or dash depending on time
         if (inputTimeDiff < timeUnit) {
             tmpBranch = InternationalStandardTrie.InputDot();
-            morseTextView.setText(tmpBranch.BranchMorseCode);
             charTextView.setText(tmpBranch.BranchChar);
+            if (tmpBranch.BranchChar.equals("?")) {
+                if (morseTextView.getText().length() <= 10)morseTextView.append(".");
+            }
+            else morseTextView.setText(tmpBranch.BranchMorseCode);
         }
-        else if ( inputTimeDiff > 3*timeUnit) {
+        else if (inputTimeDiff < 3*timeUnit) {
+            Toast.makeText(parentContext, "[Grey Area]: Between Dot and Dash lengths!", Toast.LENGTH_SHORT).show();
+        }
+        else if (inputTimeDiff < 5*timeUnit) {
             tmpBranch = InternationalStandardTrie.InputDash();
-            morseTextView.setText(tmpBranch.BranchMorseCode);
             charTextView.setText(tmpBranch.BranchChar);
+            if (tmpBranch.BranchChar.equals("?")) {
+                if (morseTextView.getText().length() <= 10)morseTextView.append("-");
+            }
+            else morseTextView.setText(tmpBranch.BranchMorseCode);
         }
         else {
-            Log.e("[EndInput]", "Time in between two options!");
+            Toast.makeText(parentContext, "[Grey Area]: Past Dash length!", Toast.LENGTH_SHORT).show();
         }
 
-        // Schedule "Space between Symbol" task
-        charTask = new interCharTask();
-        morseTimer.schedule(charTask, 3*timeUnit);
+
+        // Schedule "Space between Word" task
+        if (EndOfCharTaskOn) {
+            charTask = new interCharTask();
+            morseTimer.schedule(charTask, 3*timeUnit);
+        }
+    }
+
+    // Reset the brain (Via electric shock therapy)
+    public void ElectricShock() {
+        InternationalStandardTrie.ResetTrie();
+        morseTextView.setText("");
+        charTextView.setText("");
+        overallTextView.setText("");
     }
 
     // Purely for debugging

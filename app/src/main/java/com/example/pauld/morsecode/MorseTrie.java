@@ -3,10 +3,12 @@ package com.example.pauld.morsecode;
 public class MorseTrie {
     private MorseTrieBranch StartBranch;
     private MorseTrieBranch CurrentBranch;
+    private MorseTrieBranch TailBranch;
 
     public MorseTrie(String MorseCodeStandard[][]) {
         // Iteratively creates everything. Turtles all the way down.
-        StartBranch = new MorseTrieBranch(MorseCodeStandards.InternationalStandard[0]);
+        TailBranch = new MorseTrieBranch();
+        StartBranch = new MorseTrieBranch(MorseCodeStandards.InternationalStandard[0], TailBranch);
         CurrentBranch = StartBranch;
     }
 
