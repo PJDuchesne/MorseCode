@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BrainTestingActivity">
+
+    <TextView
+        android:id="@+id/overallCharsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="250dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/overallCharsTextView"
+        android:max="100"
+        android:progress="0"
+        android:layout_centerHorizontal="true"/>
+
+    <RelativeLayout
+        android:id="@+id/morseCodeRelativeLayout"
+        android:layout_below="@+id/overallCharsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true">
+
+        <View
+            android:id="@+id/inputCircle"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:background="@drawable/input_circle" >
+        </View>
+
+        <TextView
+            android:id="@+id/currentMorseTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:text=""
+            />
+
+        <TextView
+            android:id="@+id/currentCharTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:text=""
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/testView"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/morseCodeRelativeLayout"
+        android:background="@color/colorPrimaryDark"
+        android:text="TestTrie"
+        android:textAlignment="center"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/resetView"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/testView"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Reset"
+        android:textAlignment="center"
+        android:textSize="20sp"/>
+
+</RelativeLayout>
