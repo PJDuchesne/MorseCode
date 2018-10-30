@@ -14,25 +14,42 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        Switch inputType = findViewById(R.id.IType);
+        Switch haptic = findViewById(R.id.haptic);
+        Switch sound = findViewById(R.id.sound);
         SeekBar iSpeed = findViewById(R.id.seekBar);
         Button bLogout = findViewById(R.id.btnLogout);
         final SettingsSingleton s=SettingsSingleton.getInstance();
 
-        inputType.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        haptic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 Log.v("Switch State=",""+b);
                 if(b==true){
-                    s.setInputType(true);
+                    s.setHapticEnabled(true);
                 }
                 else{
-                    s.setInputType(false);
+                    s.setHapticEnabled(false);
                 }
-                Log.v("inputType=",""+s.inputType);
+                Log.v("hapticEnabled=",""+s.hapticEnabled);
 
             }
         });
+
+        sound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Log.v("Switch State=",""+b);
+                if(b==true){
+                    s.setSoundEnabled(true);
+                }
+                else{
+                    s.setSoundEnabled(false);
+                }
+                Log.v("soundEnabled=",""+s.soundEnabled);
+
+            }
+        });
+
 
         iSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
