@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="TrainingScreenNextWordTextSize">30sp</dimen>
+    <dimen name="TrainingScreenNextWordMarginTop">15dp</dimen>
+    <dimen name="TrainingScreenNextLetterMarginTop">5dp</dimen>
+    <dimen name="TrainingScreenNextLetterTextSize">60sp</dimen>
+    <dimen name="TrainingButtonCircleDiameter">300dp</dimen>
+    <dimen name="TrainingResetButtonDiameter">80dp</dimen>
+    <dimen name="TrainingButtonTextSize">50sp</dimen>
+    <dimen name="TrainingResetButtonMargins">20dp</dimen>
+    <dimen name="TrainingResetButtonTextSize">20sp</dimen>
+    <dimen name="TrainingMorseInputMarginBottom">35dp</dimen>
+</resources>
