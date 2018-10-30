@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity
             return true;
 
         } else if (id == R.id.nav_trainingScreen_1) {
-            Intent intent1=new Intent(this,TrainingScreen_1.class);
+            Intent intent1=new Intent(this,TrainingScreen.class);
             this.startActivity(intent1);
             return true;
 
