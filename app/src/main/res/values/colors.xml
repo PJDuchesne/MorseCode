@@ -7,4 +7,5 @@
     <color name="colorTrainingNextWordText">#7ABC41</color>
     <color name="colorTrainingButton">#FBFBFB</color>
     <color name="colorResetTrainingButton">#FF4040</color>
+    <color name="colorGrey">#696969</color>
 </resources>
