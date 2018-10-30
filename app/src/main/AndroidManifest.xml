@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".TrainingScreen">
-        </activity>
-        <activity android:name=".BrainTestingActivity"></activity>
+	<activity android:name=".SettingsActivity" />
+	<activity android:name=".LoginActivity" />
+        <activity android:name=".SignUpActivity" />
+	<activity android:name=".DUMMY" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".TrainingScreen" />
+	<activity android:name=".BrainTestingActivity" />
         <activity android:name=".training_screen_landing_page">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +23,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".BrainTestingActivity"/>
+        <activity
+            android:name=".LoginScreen_1"
+            android:label="LoginScreen"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".InputOutput"
+            android:label="Input/Output"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ChatScreen"
+            android:label="Chat Screen"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Settings"
+            android:label="Settings"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".TrainingScreen_1"
+            android:label="TrainingScreen_1"
+	    android:parentActivityName=".MainActivity" />
+    	<activity android:name=".BrainTestingActivity" />
     </application>
 
 </manifest>
