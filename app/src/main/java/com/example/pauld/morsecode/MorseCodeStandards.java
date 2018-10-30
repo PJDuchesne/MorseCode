@@ -8,51 +8,51 @@ public class MorseCodeStandards {
 
     // 0 -> ASCII Character
     // 1 -> Morse Code Characters
-    // 2 -> DOT  (.)
+    // 2 -> DOT  (•)
     // 3 -> DASH (-)
     public final static String InternationalStandard[][] = {
             {"",  "",      "E", "T"}, // Empty is actually a space
-            {"A", ".-",    "R", "W"}, // 1st entry for start of letters
-            {"B", "-...",  "6", "?"},
-            {"C", "-.-.",  "?", "?"},
-            {"D", "-..",   "B", "X"},
-            {"E", ".",     "I", "A"},
-            {"F", "..-.",  "?", "?"},
-            {"G", "--.",   "Z", "Q"},
-            {"H", "....",  "5", "4"},
-            {"I", "..",    "S", "U"},
-            {"J", ".---",  "?", "1"},
-            {"K", "-.-",   "C", "Y"},
-            {"L", ".-..",  "?", "?"},
+            {"A", "•-",    "R", "W"}, // 1st entry for start of letters
+            {"B", "-•••",  "6", "?"},
+            {"C", "-•-•",  "?", "?"},
+            {"D", "-••",   "B", "X"},
+            {"E", "•",     "I", "A"},
+            {"F", "••-•",  "?", "?"},
+            {"G", "--•",   "Z", "Q"},
+            {"H", "••••",  "5", "4"},
+            {"I", "••",    "S", "U"},
+            {"J", "•---",  "?", "1"},
+            {"K", "-•-",   "C", "Y"},
+            {"L", "•-••",  "?", "?"},
             {"M", "--",    "G", "O"},
-            {"N", "-.",    "D", "K"},
+            {"N", "-•",    "D", "K"},
             {"O", "---",   " ", " "},
-            {"P", ".--.",  "?", "?"},
-            {"Q", "--.-",  "?", "?"},
-            {"R", ".-.",   "L", "?"},
-            {"S", "...",   "H", "V"},
+            {"P", "•--•",  "?", "?"},
+            {"Q", "--•-",  "?", "?"},
+            {"R", "•-•",   "L", "?"},
+            {"S", "•••",   "H", "V"},
             {"T", "-",     "N", "M"},
-            {"U", "..-",   "F", " "},
-            {"V", "...-",  "?", "3"},
-            {"W", ".--",   "P", "J"},
-            {"X", "-..-",  "?", "?"},
-            {"Y", "-.--",  "?", "?"},
-            {"Z", "--..",  "7", "?"},
+            {"U", "••-",   "F", " "},
+            {"V", "•••-",  "?", "3"},
+            {"W", "•--",   "P", "J"},
+            {"X", "-••-",  "?", "?"},
+            {"Y", "-•--",  "?", "?"},
+            {"Z", "--••",  "7", "?"},
             {"0", "-----", "?", "?"}, // 27th entry for start of numbers
-            {"1", ".----", "?", "?"},
-            {"2", "..---", "?", "?"},
-            {"3", "...--", "?", "?"},
-            {"4", "....-", "?", "?"},
-            {"5", ".....", "?", "?"},
-            {"6", "-....", "?", "?"},
-            {"7", "--...", "?", "?"},
-            {"8", "---..", "?", "?"},
-            {"9", "----.", "?", "?"},
+            {"1", "•----", "?", "?"},
+            {"2", "••---", "?", "?"},
+            {"3", "•••--", "?", "?"},
+            {"4", "••••-", "?", "?"},
+            {"5", "•••••", "?", "?"},
+            {"6", "-••••", "?", "?"},
+            {"7", "--•••", "?", "?"},
+            {"8", "---••", "?", "?"},
+            {"9", "----•", "?", "?"},
 
             // Three special branches to lead to some numbers
             // TODO: Maybe not display ???
-            {" ", "..--", "?", "2"}, // Branch leading to 2         // Coming from U
-            {" ", "---.", "8", "?"}, // Branch leading to 8         // Coming from O
+            {" ", "••--", "?", "2"}, // Branch leading to 2         // Coming from U
+            {" ", "---•", "8", "?"}, // Branch leading to 8         // Coming from O
             {" ", "----", "9", "0"}, // Branch leading to 9 && 0    // Coming from O
 
             // General Confusion branch
@@ -64,11 +64,9 @@ public class MorseCodeStandards {
     // DotBranch -> Whether this is looking for a dotBranch (true) or dashBranch (false)
     // Both of the above are just used to handle special cases
     public static int GetRow(char InputChar, String MorseCodeStr, boolean DotBranch) {
-//        Log.e("[GetRow]: ", "InputChar >>" + InputChar + "<<");
-//        Log.e("[GetRow]: ", "MorseCodeStr >>" + MorseCodeStr + "<<");
         if (InputChar == ' ') {
             // Special cases:
-            if (MorseCodeStr.equals("..-")) return InternationalLength - 4;
+            if (MorseCodeStr.equals("••-")) return InternationalLength - 4;
             if (DotBranch && MorseCodeStr.equals("---")) return InternationalLength - 3;
             if (!DotBranch && MorseCodeStr.equals("---")) return InternationalLength - 2;
 

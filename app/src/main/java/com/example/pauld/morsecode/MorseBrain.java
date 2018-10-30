@@ -24,6 +24,7 @@ public class MorseBrain {
     private interWordTask wordTask;
     private Handler uiHandler; // To allow the timer thread to change textViews
     private ObjectAnimator progressAnimation;
+    private Toast currentToast;
 
     // Settings
     private boolean EndOfWordTaskOn;
@@ -49,6 +50,7 @@ public class MorseBrain {
         progressBar = inputProgressBar;
         morseTimer = new Timer();
         uiHandler = new Handler();
+        currentToast = null;
 
         parentContext = context;
 
@@ -125,19 +127,23 @@ public class MorseBrain {
     // PUBLIC API BELOW
 
     public void StartInput() {
+        // Cancel any displaying toast
+        if (currentToast != null) currentToast.cancel();
+
         // Cancel currently scheduled task (if any)
         CancelTimerTasks();
 
-        // Store user input start time
-        startInputTime = System.currentTimeMillis();
-
         // Start progress animation
         StartProgressBar();
+
+        // Store user input start time
+        startInputTime = System.currentTimeMillis();
     }
 
     public void EndInput() {
-        // Reset progress bar
+        // Reset progress bar and toast
         ResetProgressBar();
+        if (currentToast != null) currentToast.cancel();
 
         MorseTrieBranch tmpBranch;
 
@@ -149,12 +155,13 @@ public class MorseBrain {
             tmpBranch = InternationalStandardTrie.InputDot();
             charTextView.setText(tmpBranch.BranchChar);
             if (tmpBranch.BranchChar.equals("?")) {
-                if (morseTextView.getText().length() <= 10) morseTextView.append(".");
+                if (morseTextView.getText().length() <= 10) morseTextView.append("•");
             }
             else morseTextView.setText(tmpBranch.BranchMorseCode);
         }
         else if (inputTimeDiff < 3*timeUnit) {
-            Toast.makeText(parentContext, "[Grey Area]: Between Dot and Dash lengths!", Toast.LENGTH_SHORT).show();
+            currentToast = Toast.makeText(parentContext, "Time in between Dot and Dash!", Toast.LENGTH_SHORT);
+            currentToast.show();
         }
         else if (inputTimeDiff < 5*timeUnit) {
             tmpBranch = InternationalStandardTrie.InputDash();
@@ -165,7 +172,8 @@ public class MorseBrain {
             else morseTextView.setText(tmpBranch.BranchMorseCode);
         }
         else {
-            Toast.makeText(parentContext, "[Grey Area]: Past Dash length!", Toast.LENGTH_SHORT).show();
+            currentToast = Toast.makeText(parentContext, "Time after Dash!", Toast.LENGTH_SHORT);
+            currentToast.show();
         }
 
         // Schedule "Space between Word" task
@@ -181,6 +189,7 @@ public class MorseBrain {
         morseTextView.setText("");
         charTextView.setText("");
         if (overallTextView != null) overallTextView.setText("");
+        if (currentToast != null) currentToast.cancel();
         ResetProgressBar();
     }
 
