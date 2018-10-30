@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class SettingsSingleton {
     private static volatile SettingsSingleton sInstance;
-    public boolean inputType=true;
+    public boolean hapticEnabled=true;
+    public boolean soundEnabled=true;
     public int inputSpeed=3;
 
     private SettingsSingleton() {
@@ -22,12 +23,20 @@ public class SettingsSingleton {
         return sInstance;
     }
 
-    public void setInputType(boolean inputType){
-        this.inputType=inputType;
+    public void setHapticEnabled(boolean hapticEnabled){
+        this.hapticEnabled=hapticEnabled;
     }
 
-    public boolean getInputType(){
-        return this.inputType;
+    public boolean getHapticEnabled(){
+        return this.hapticEnabled;
+    }
+
+    public void setSoundEnabled(boolean soundEnabled){
+        this.soundEnabled=soundEnabled;
+    }
+
+    public boolean getSoundEnabled(){
+        return this.soundEnabled;
     }
 
     public void setInputSpeed(int inputSpeed){
