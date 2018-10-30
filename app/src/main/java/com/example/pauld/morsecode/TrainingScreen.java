@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +18,6 @@ import org.w3c.dom.Text;
 import java.util.StringTokenizer;
 
 public class TrainingScreen extends AppCompatActivity{
-
     private String lessonString, currentWordStr, currentLetterStr;
     private StringTokenizer lessonTokens;
     private TextView currentWord, currentLetter, currentLetterMorse, currentInputLetter, currentInputLetterMorse;
@@ -50,8 +51,9 @@ public class TrainingScreen extends AppCompatActivity{
 
         Intent intent = getIntent();
 
-        // FOR TESTING: hardcoding the lessonString
-        lessonString = "TEST LESSON";
+        lessonString = intent.getStringExtra("LESSON_STRING");
+        if(lessonString.isEmpty())
+            lessonString = "DEFAULT INPUT LESSON";
         lessonString = lessonString.toUpperCase();
         // Tokenize the lesson by spaces.
         lessonTokens = new StringTokenizer(lessonString, " ");
@@ -92,7 +94,7 @@ public class TrainingScreen extends AppCompatActivity{
             return;
         }
         currentWordStr = lessonTokens.nextToken();
-        currentWord.setText(currentWordStr);
+        //currentWord.setText(currentWordStr);
         newWord = true;
         gotoNextLetter();
     }
@@ -107,8 +109,11 @@ public class TrainingScreen extends AppCompatActivity{
             return;
         }
         currentLetterStr = currentWordStr.substring(wordCharIndex, wordCharIndex + 1);
-        wordCharIndex++;
         currentLetter.setText(currentLetterStr);
+        SpannableString underlinedString = new SpannableString(currentWordStr);
+        underlinedString.setSpan(new UnderlineSpan(), wordCharIndex, wordCharIndex+1, 0);
+        wordCharIndex++;
+        currentWord.setText(underlinedString);
         currentLetterMorse.setText(getMorseString(currentLetterStr));
         resetButtonInput();
     }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".training_screen_landing_page"
+    android:orientation="vertical"
+    android:background="@color/colorTrainingButton">
+
+    <EditText
+        android:id="@+id/insert_training_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:hint="Input Text for Training Screen"
+        android:textSize="25sp"/>
+
+    <Button
+        android:id="@+id/training_screen_navigation"
+        android:layout_width="400dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/insert_training_text"
+        android:layout_centerInParent="true"
+        android:text="Generate training screen"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/brain_test_navigation"
+        android:layout_width="400dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/training_screen_navigation"
+        android:layout_centerInParent="true"
+        android:text="Brain test screen"
+        android:textSize="20sp" />
+
+</RelativeLayout>
