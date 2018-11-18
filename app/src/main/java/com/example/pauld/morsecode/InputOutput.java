@@ -1,7 +1,10 @@
 package com.example.pauld.morsecode;
 
 import android.content.Context;
+import android.hardware.camera2.CameraManager;
+import android.media.AudioFormat;
 import android.media.AudioManager;
+import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -10,6 +13,7 @@ import android.net.Uri;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class InputOutput extends AppCompatActivity {
@@ -23,7 +27,7 @@ public class InputOutput extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        d = new Driver( (Vibrator) this.getSystemService(VIBRATOR_SERVICE),getApplicationContext(),getPackageName() );
+        d = new Driver( (Vibrator) this.getSystemService(VIBRATOR_SERVICE), (CameraManager) getSystemService(Context.CAMERA_SERVICE));
 
         findViewById(R.id.ioBtn).setOnClickListener(new View.OnClickListener() {
             @Override
