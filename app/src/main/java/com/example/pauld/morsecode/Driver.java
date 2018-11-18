@@ -17,9 +17,11 @@ public class Driver {
     private AudioTrack soundHandler;
     private CameraManager lightHandler;
     private byte soundData[];
+    private SettingsSingleton desiredSettings;
 
 
     public Driver(Vibrator vibratorService, CameraManager systemService, Context applicationContext) {
+        desiredSettings = SettingsSingleton.getInstance();
         vibrateHandler = vibratorService;
         generateSound(540, 10);
         soundHandler = new AudioTrack(AudioManager.STREAM_MUSIC,
@@ -41,7 +43,9 @@ public class Driver {
     }
 
     public void on(){
-        vibrateHandler.vibrate(999999999 );
+        if(desiredSettings.getHapticEnabled()){
+            vibrateHandler.vibrate(999999999 );
+        }
         /*
         try {
             soundHandler.seekTo(0);
@@ -50,7 +54,7 @@ public class Driver {
             e.printStackTrace();
         }
         */
-        if(soundHandler.getPlayState() != AudioTrack.PLAYSTATE_PLAYING){
+        if(soundHandler.getPlayState() != AudioTrack.PLAYSTATE_PLAYING && desiredSettings.getSoundEnabled()){
             soundHandler.play();
         }
 
