@@ -1,5 +1,6 @@
 package com.example.pauld.morsecode;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button btn_login,btn_exit;
+    private Button btn_login,btn_register;
     private EditText edit_email ,edit_pass;
     private String password,email;
     private FirebaseAuth userAuth;
@@ -30,15 +31,21 @@ public class LoginActivity extends AppCompatActivity {
         //User Init
         userAuth = FirebaseAuth.getInstance();
 
+        if(userAuth.getCurrentUser() != null ){
+            Toast.makeText(getApplicationContext(),"You are already logged in!",Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
         btn_login = findViewById(R.id.btn_login);
         edit_email = findViewById(R.id.edit_email);
         edit_pass = findViewById(R.id.edit_pass);
-        btn_exit = findViewById(R.id.btn_exit);
+        btn_register = findViewById(R.id.btn_register);
 
-        btn_exit.setOnClickListener(new View.OnClickListener(){
+        btn_register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent1=new Intent(getApplicationContext(),SignUpActivity.class);
+                startActivity(intent1);
             }
         });
 
