@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         userAuth = FirebaseAuth.getInstance();
 
         if(userAuth.getCurrentUser() != null ){
-            Toast.makeText(getApplicationContext(),"You are already logged in!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"You have logged in!",Toast.LENGTH_SHORT).show();
             finish();
         }
 
