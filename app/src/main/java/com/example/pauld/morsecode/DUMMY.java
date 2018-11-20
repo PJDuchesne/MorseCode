@@ -267,8 +267,12 @@ public class DUMMY extends AppCompatActivity {
      *
      *
      * */
+    //private FirebaseUser user;
+    //private FirebaseAuth userAuth;
+    //private FirebaseDatabase firebaseDBInstance;
     private Boolean[] lessonsCompleted = new Boolean[10];
     private void getUserCompletedLessons(){
+        //firebaseDBInstance = FirebaseDatabase.getInstance();
         //User Init
         userAuth = FirebaseAuth.getInstance();
         user = userAuth.getCurrentUser();
@@ -276,7 +280,7 @@ public class DUMMY extends AppCompatActivity {
             lessonsCompleted = null;
             return;
         }
-        firebaseDBInstance.getReference("users").child(user.getUid()).child("lessonsCompleted").addValueEventListener(new ValueEventListener() {
+        firebaseDBInstance.getReference("users").child(user.getUid()).child("lessonsCompleted").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot d : dataSnapshot.getChildren()){
