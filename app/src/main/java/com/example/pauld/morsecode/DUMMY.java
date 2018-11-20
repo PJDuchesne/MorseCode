@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +59,7 @@ public class DUMMY extends AppCompatActivity {
         firebaseDBInstance = FirebaseDatabase.getInstance();
         DatabaseReference firebaseReferenceOne = firebaseDBInstance.getReference("one");
         DatabaseReference firebaseReferencePublic = firebaseDBInstance.getReference("public");
+
 
 
         //Screen Elements
@@ -177,8 +179,22 @@ public class DUMMY extends AppCompatActivity {
         user = userAuth.getCurrentUser();
 
         if(user != null){
+            getUserCompletedLessons();
             lv2.setVisibility(View.VISIBLE);
             firebaseReferenceUser = firebaseDBInstance.getReference("users").child(user.getUid());
+            firebaseDBInstance.getReference("users").child(user.getUid()).child("lessonsCompleted").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Boolean[] lessonsCompleted = new Boolean[10];
+                    for(DataSnapshot d : dataSnapshot.getChildren()){
+                        lessonsCompleted[Integer.valueOf(d.getKey())] = Boolean.valueOf( d.getValue().toString() );
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
             firebaseReferenceUser.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -244,6 +260,40 @@ public class DUMMY extends AppCompatActivity {
             btn_logIn.setVisibility(View.VISIBLE);
             lv2.setVisibility(View.INVISIBLE);
         }
+    }
+
+    /**
+     * This method fetches the user data and populates an array of lessons completed
+     *
+     * Setting a lesson as completed is done with this single line where N is the lesson competed
+     *firebaseDBInstance.getReference("users").child(user.getUid()).child("lessonsCompleted").child("N").setValue(1);
+     * */
+    //private FirebaseUser user;
+    //private FirebaseAuth userAuth;
+    //private FirebaseDatabase firebaseDBInstance;
+    private Boolean[] lessonsCompleted = new Boolean[10];
+    private void getUserCompletedLessons(){
+        //firebaseDBInstance = FirebaseDatabase.getInstance();
+        //User Init
+        userAuth = FirebaseAuth.getInstance();
+        user = userAuth.getCurrentUser();
+        if(user == null){
+            lessonsCompleted = null;
+            return;
+        }
+        firebaseDBInstance.getReference("users").child(user.getUid()).child("lessonsCompleted").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot d : dataSnapshot.getChildren()){
+                    lessonsCompleted[Integer.valueOf(d.getKey())] =  (1 == Integer.valueOf( d.getValue().toString() ));
+                }
+                Toast.makeText(getApplicationContext(), Arrays.toString(lessonsCompleted),Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }

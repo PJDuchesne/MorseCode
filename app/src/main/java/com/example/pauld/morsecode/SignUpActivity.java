@@ -95,6 +95,16 @@ public class SignUpActivity extends AppCompatActivity {
                                     DatabaseReference userData = firebaseDBInstance.getReference("users").child(user.getUid());
                                     //userData.child("name").setValue(name);
                                     userData.child("ID").setValue(user.getUid());
+                                    userData.child("lessonsCompleted").child("0").setValue(0);
+                                    userData.child("lessonsCompleted").child("1").setValue(0);
+                                    userData.child("lessonsCompleted").child("2").setValue(0);
+                                    userData.child("lessonsCompleted").child("3").setValue(0);
+                                    userData.child("lessonsCompleted").child("4").setValue(0);
+                                    userData.child("lessonsCompleted").child("5").setValue(0);
+                                    userData.child("lessonsCompleted").child("6").setValue(0);
+                                    userData.child("lessonsCompleted").child("7").setValue(0);
+                                    userData.child("lessonsCompleted").child("8").setValue(0);
+                                    userData.child("lessonsCompleted").child("9").setValue(0);
                                     Toast.makeText(SignUpActivity.this, "Account Created! You are now logged in.",Toast.LENGTH_SHORT).show();
                                     finish();
                                 } else {
