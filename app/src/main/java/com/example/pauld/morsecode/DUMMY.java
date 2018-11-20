@@ -262,6 +262,11 @@ public class DUMMY extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method fetches the user data and populates an array of lessons completed
+     *
+     *
+     * */
     private Boolean[] lessonsCompleted = new Boolean[10];
     private void getUserCompletedLessons(){
         //User Init
