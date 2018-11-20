@@ -25,7 +25,9 @@ import java.util.ArrayList;
 public class Lessons extends AppCompatActivity {
     private FirebaseDatabase firebaseDBInstance;
     private DatabaseReference firebaseReferenceLessons;
+    private final int NUMBER_OF_LESSONS = 10;
     private ArrayList<String> lessonsList;
+    private String[] lessonStrings;
     private ListView lessonListView;
 
     @Override
@@ -35,56 +37,59 @@ public class Lessons extends AppCompatActivity {
 
         firebaseDBInstance = FirebaseDatabase.getInstance();
         firebaseReferenceLessons = firebaseDBInstance.getReference("lessons");
+        initiateLessonArray();
         lessonsList = new ArrayList<String>();
         lessonListView = findViewById(R.id.lessonListView);
 
+        for(int i = 0; i < NUMBER_OF_LESSONS; i++){
+            String lessonName = "Lesson " + String.valueOf(i+1);
+            lessonsList.add(lessonName);
+        }
 
-        firebaseReferenceLessons.addValueEventListener(new ValueEventListener() {
+        // This arrayadapter is used to populate the list's display
+        ArrayAdapter<String> listPopulator = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_list_item_1, lessonsList) {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for( DataSnapshot D : dataSnapshot.getChildren() ){
-                    lessonsList.add(D.getKey());
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView t = (TextView) view.findViewById(android.R.id.text1);
+                t.setTextColor(Color.BLACK);
+                if(position % 2 == 0) {
+                    t.setBackgroundColor(Color.GREEN);
+                    t.setText(t.getText() + "\t\t\t\tCompleted");
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_list_item_1, lessonsList) {
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        View view = super.getView(position, convertView, parent);
-                        TextView t = (TextView) view.findViewById(android.R.id.text1);
-                        t.setTextColor(Color.BLACK);
-                        return view;
-                    }
-                };
-                lessonListView.setAdapter(adapter);
+                return view;
             }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.d("SINGLETAG", "Failed to read value.", error.toException());
-            }
-        });
+        };
+        // Set the list to display the adapter.
+        lessonListView.setAdapter(listPopulator);
 
         lessonListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 TextView tv = (TextView) view;
-                firebaseReferenceLessons.child(tv.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Toast.makeText(getApplicationContext(), dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
-                        String response = dataSnapshot.getValue().toString();
-                        Intent intent1=new Intent(getApplicationContext(),TrainingScreen.class);
-                        intent1.putExtra("LESSON_STRING",response);
-                        startActivity(intent1);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-                //Toast.makeText(getApplicationContext(), firebaseReferenceLessons.child(tv.getText().toString())..toString(),Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(getApplicationContext(),TrainingScreen.class);
+                // Hand the lesson activity the lesson plan
+                intent.putExtra("LESSON_STRING", lessonStrings[i]);
+                // Hand the lesson activity the lesson number
+                intent.putExtra("LESSON_NUMBER", i);
+                startActivity(intent);
             }
         });
+
+        }
+
+    private void initiateLessonArray(){
+        lessonStrings = new String[NUMBER_OF_LESSONS];
+        lessonStrings[0] = getResources().getString(R.string.CommonAlphabetLesson);
+        lessonStrings[1] = getResources().getString(R.string.FullAlphabetLesson);
+        lessonStrings[2] = getResources().getString(R.string.ShortNumberLesson);
+        lessonStrings[3] = getResources().getString(R.string.VeryShortWordLesson1);
+        lessonStrings[4] = getResources().getString(R.string.VeryShortWordLesson2);
+        lessonStrings[5] = getResources().getString(R.string.ShortWordLesson);
+        lessonStrings[6] = getResources().getString(R.string.MediumWordLesson1);
+        lessonStrings[7] = getResources().getString(R.string.MediumWordLesson2);
+        lessonStrings[8] = getResources().getString(R.string.LongNumberLesson);
+        lessonStrings[9] = getResources().getString(R.string.LongWordLesson);
     }
 }

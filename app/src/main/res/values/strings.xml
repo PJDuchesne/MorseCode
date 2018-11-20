@@ -13,5 +13,17 @@
     <string name="LoginScreenNav">Login Screen</string>
     <string name="InputOutputNav">Input/Output</string>
     <string name="ChatScreenNav">Chat Screen</string>
+    <string name="LessonLandingTitle">Lesson List</string>
     <string name="lessons">Lessons</string>
+
+    <string name="CommonAlphabetLesson">E T A I N O S E S N T O I A T A E N I S A O E T S</string>
+    <string name="FullAlphabetLesson">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</string>
+    <string name="ShortNumberLesson">0 1 2 3 4 5 6 7 9 10 11 22 33 44 55 66 77 88 99 00</string>
+    <string name="VeryShortWordLesson1">THE AND FOR ARE BUT NOT YOU ALL ANY CAN HER MOM</string>
+    <string name="VeryShortWordLesson2">WAS ONE OUR OUT DAY GET HAS HIM HIS HOW MAN DAD</string>
+    <string name="ShortWordLesson">THAT BELL CAKE ZERO WALK UNIT TEAM SAFE PAGE OPEN EACH</string>
+    <string name="MediumWordLesson1">ABOVE BEHIND CHEESE COUNT DANCE LADDER OCEAN QUEEN</string>
+    <string name="MediumWordLesson2">USUAL TWICE SPRING RECORD POLICE NEEDLE LAUGH JELLY</string>
+    <string name="LongNumberLesson">11 63 128 255 512 1023 9305 7542 6422 23085 84757</string>
+    <string name="LongWordLesson">AUTUMN BUSINESS DANGEROUS HUSBAND KITCHEN NEWSPAPER PHOTOGRAPH</string>
 </resources>

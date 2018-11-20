@@ -14,6 +14,9 @@
     <dimen name="TrainingMorseProgressBarHeight">20dp</dimen>
     <dimen name="TrainingMorseProgressBarMarginBottom">30dp</dimen>
     <dimen name="TrainingMorseProgressBarMarginLeft">20dp</dimen>
+    <dimen name="LessonLandingTitleMarginTop">30dp</dimen>
+    <dimen name="LessonLandingTitleTextSize">50sp</dimen>
+    <dimen name="LessonLandingListMarginTop">30dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
