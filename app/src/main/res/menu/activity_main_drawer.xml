@@ -23,6 +23,10 @@
             android:id="@+id/nav_chatScreen"
 
             android:title="@string/ChatScreenNav" />
+        <item
+            android:id="@+id/nav_lessonsScreen"
+
+            android:title="@string/lessons" />
         <!--  android:icon="@drawable/ic_menu_manage" -->
     </group>
 

@@ -13,4 +13,5 @@
     <string name="LoginScreenNav">Login Screen</string>
     <string name="InputOutputNav">Input/Output</string>
     <string name="ChatScreenNav">Chat Screen</string>
+    <string name="lessons">Lessons</string>
 </resources>

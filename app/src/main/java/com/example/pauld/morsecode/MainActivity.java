@@ -104,7 +104,11 @@ public class MainActivity extends AppCompatActivity
             Intent intent1=new Intent(this,training_screen_landing_page.class);
             this.startActivity(intent1);
             return true;
-
+        }
+        else if (id == R.id.nav_lessonsScreen) {
+            Intent intent1=new Intent(this,Lessons.class);
+            this.startActivity(intent1);
+            return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

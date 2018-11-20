@@ -22,7 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private Button btn_signUp,btn_exit;
     private EditText edit_email ,edit_pass ,edit_name;
-    private String name,password,email;
+    private String password,email;//,name;
     private FirebaseAuth userAuth;
     private FirebaseDatabase firebaseDBInstance;
 
@@ -54,17 +54,19 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 email = edit_email.getText().toString();
-                name = edit_name.getText().toString();
+                //name = edit_name.getText().toString();
                 password = edit_pass.getText().toString();
-                if(email.isEmpty() || password.isEmpty() || name.isEmpty()){
+                if(email.isEmpty() || password.isEmpty() ){
                     if(email.isEmpty()){
                         edit_email.setHint("Enter a valid email");
                         edit_email.setHintTextColor(getColor(R.color.colorAccent));
                     }
+                    /*
                     if(name.isEmpty()){
                         edit_name.setHint("Enter a name");
                         edit_name.setHintTextColor(getColor(R.color.colorAccent));
                     }
+                    */
                     if(password.isEmpty()){
                         Toast.makeText(getApplicationContext(),"Password field shoudn't be empty",Toast.LENGTH_SHORT).show();
                     }
@@ -91,7 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     Log.d("SINGLETAG", "createUserWithEmail:success");
                                     FirebaseUser user = userAuth.getCurrentUser();
                                     DatabaseReference userData = firebaseDBInstance.getReference("users").child(user.getUid());
-                                    userData.child("name").setValue(name);
+                                    //userData.child("name").setValue(name);
                                     userData.child("ID").setValue(user.getUid());
                                     finish();
                                 } else {
