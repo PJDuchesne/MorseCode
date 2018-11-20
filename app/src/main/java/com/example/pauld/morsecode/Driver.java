@@ -19,7 +19,6 @@ public class Driver {
     private byte soundData[];
     private SettingsSingleton desiredSettings;
 
-
     public Driver(Vibrator vibratorService, CameraManager systemService, Context applicationContext) {
         desiredSettings = SettingsSingleton.getInstance();
         vibrateHandler = vibratorService;

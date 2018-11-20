@@ -3,17 +3,16 @@ package com.example.pauld.morsecode;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.util.Log;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.example.pauld.morsecode.MorseCodeStandards.GiveLetterGetMorse;
 
 public class MorseBrain {
     // Local variables
@@ -22,9 +21,13 @@ public class MorseBrain {
     private interSymbolTask symbolTask;
     private interCharTask charTask;
     private interWordTask wordTask;
+    private outputDotDashTask dotDashTask;
+    private outputSilenceTask silenceTask;
     private Handler uiHandler; // To allow the timer thread to change textViews
     private ObjectAnimator progressAnimation;
     private Toast currentToast;
+    private volatile boolean outputFlag1;
+    private volatile boolean outputFlag2;
 
     // Settings
     private boolean EndOfWordTaskOn;
@@ -41,8 +44,11 @@ public class MorseBrain {
     private Context parentContext;
     private ProgressBar progressBar;
 
+    // Sound/Vibrate/Light Driver
+    private Driver feedbackDriver;
+
     // TODO: Add input variable to change standard
-    public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView, TextView inputOverallTextView, ProgressBar inputProgressBar) {
+    public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView, TextView inputOverallTextView, ProgressBar inputProgressBar, Driver inputDriver) {
         InternationalStandardTrie = new MorseTrie(MorseCodeStandards.InternationalStandard);
         morseTextView = inputMorseTextView;
         charTextView = inputCharTextView;
@@ -56,6 +62,8 @@ public class MorseBrain {
 
         EndOfWordTaskOn = true;
         EndOfCharTaskOn = false;
+
+        feedbackDriver = inputDriver;
 
         ElectricShock();
     }
@@ -127,6 +135,9 @@ public class MorseBrain {
     // PUBLIC API BELOW
 
     public void StartInput() {
+        // Start any feedback
+        feedbackDriver.on();
+
         // Cancel any displaying toast
         if (currentToast != null) currentToast.cancel();
 
@@ -141,6 +152,9 @@ public class MorseBrain {
     }
 
     public void EndInput() {
+        // Turn feedback off
+        feedbackDriver.off();
+
         // Reset progress bar and toast
         ResetProgressBar();
         if (currentToast != null) currentToast.cancel();
@@ -235,4 +249,74 @@ public class MorseBrain {
         if (progressAnimation != null) progressAnimation.cancel();
         progressBar.setProgress(0);
     }
+
+    // API for Output
+
+    public void OutputMorse(String MorseCodeToOutput) {
+        // Check that the string is proper characters
+        if (!MorseCodeToOutput.matches("[a-zA-Z ]+")) {
+            Log.d("MorseBrain", "Invalid Character found in OutputMorse");
+        }
+
+        // Split string by spaces
+        String Tokenized[] = MorseCodeToOutput.split("\\s+");
+        String currentCharString;
+        String currentMorseString;
+
+        // Iterate word by word, performing output
+        for(int i = 0; i < Tokenized.length; i++) {
+            // Display current word
+            overallTextView.setText(Tokenized[i]);
+
+            for(int n = 0; n < Tokenized[i].length(); n++) {
+                currentCharString = Tokenized[i].substring(0, 1);
+                currentMorseString = GiveLetterGetMorse(currentCharString);
+
+                // Display Current Character as Char and as Morse
+                charTextView.setText(currentCharString);
+                morseTextView.setText(currentMorseString);
+
+                OutputMorseChar(currentMorseString);
+            }
+        }
+    }
+
+    private void OutputMorseChar(String morseString) {
+        // Make the sounds!
+        for (int i = 0; i < morseString.length(); i++) {
+            // Reset flags for this character
+            outputFlag1 = true;
+            outputFlag2 = true;
+
+            // Turn on feedback
+            feedbackDriver.on();
+
+            // Schedule timer to turn feedback off
+            dotDashTask = new outputDotDashTask();
+            morseTimer.schedule(dotDashTask, ((morseString.charAt(i) == '-') ? 3 : 1)*timeUnit);
+
+            while(outputFlag1 == true) {}
+
+            silenceTask = new outputSilenceTask();
+            morseTimer.schedule(silenceTask, timeUnit);
+
+            while(outputFlag2 == true) {}
+        }
+    }
+
+    private class outputDotDashTask extends TimerTask {
+        @Override
+        public void run() {
+            feedbackDriver.off();
+            outputFlag1 = false;
+        }
+    }
+
+    private class outputSilenceTask extends TimerTask {
+        @Override
+        public void run() {
+            outputFlag2 = false;
+        }
+    }
+
 }
