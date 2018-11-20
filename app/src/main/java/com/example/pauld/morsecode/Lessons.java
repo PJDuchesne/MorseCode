@@ -72,7 +72,7 @@ public class Lessons extends AppCompatActivity {
                 // Hand the lesson activity the lesson plan
                 intent.putExtra("LESSON_STRING", lessonStrings[i]);
                 // Hand the lesson activity the lesson number
-                intent.putExtra("LESSON_NUMBER", i);
+                intent.putExtra("LESSON_NUMBER", String.valueOf(i));
                 startActivity(intent);
             }
         });

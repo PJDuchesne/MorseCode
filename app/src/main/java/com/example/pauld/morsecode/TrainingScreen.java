@@ -13,12 +13,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.w3c.dom.Text;
 
 import java.util.StringTokenizer;
 
 public class TrainingScreen extends AppCompatActivity{
-    private String lessonString, currentWordStr, currentLetterStr;
+    private String lessonString, currentWordStr, currentLetterStr, lessonID;
     private StringTokenizer lessonTokens;
     private TextView currentWord, currentLetter, currentLetterMorse, currentInputLetter, currentInputLetterMorse;
     private View morseInputButton;
@@ -28,10 +30,14 @@ public class TrainingScreen extends AppCompatActivity{
     private MorseBrain brain;
     private ProgressBar progressBar;
 
+    private FirebaseDatabase firebaseDBInstance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training_screen);
+
+        firebaseDBInstance = FirebaseDatabase.getInstance();
 
         // Link the TextViews/Buttons
         currentWord = findViewById(R.id.current_training_word);
@@ -52,6 +58,7 @@ public class TrainingScreen extends AppCompatActivity{
         Intent intent = getIntent();
 
         lessonString = intent.getStringExtra("LESSON_STRING");
+        lessonID = intent.getStringExtra("LESSON_NUMBER");
         if(lessonString.isEmpty())
             lessonString = "DEFAULT INPUT LESSON";
         lessonString = lessonString.toUpperCase();
@@ -94,7 +101,6 @@ public class TrainingScreen extends AppCompatActivity{
             return;
         }
         currentWordStr = lessonTokens.nextToken();
-        //currentWord.setText(currentWordStr);
         newWord = true;
         gotoNextLetter();
     }
@@ -146,6 +152,8 @@ public class TrainingScreen extends AppCompatActivity{
         currentLetter.setText("Lesson");
         currentLetterMorse.setText("Complete!");
         currentWord.setText("");
+
+        firebaseDBInstance.getReference("users").child(user.getUid()).child("lessonsCompleted").child().setValue(1);
         resetButtonInput();
     }
 
