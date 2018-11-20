@@ -90,11 +90,12 @@ public class SignUpActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
-                                    Log.d("SINGLETAG", "createUserWithEmail:success");
+                                    //Log.d("SINGLETAG", "createUserWithEmail:success");
                                     FirebaseUser user = userAuth.getCurrentUser();
                                     DatabaseReference userData = firebaseDBInstance.getReference("users").child(user.getUid());
                                     //userData.child("name").setValue(name);
                                     userData.child("ID").setValue(user.getUid());
+                                    Toast.makeText(SignUpActivity.this, "Account Created! You are now logged in.",Toast.LENGTH_SHORT).show();
                                     finish();
                                 } else {
                                     // If sign in fails, display a message to the user.

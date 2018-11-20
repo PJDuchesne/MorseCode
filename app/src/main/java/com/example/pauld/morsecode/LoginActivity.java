@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         userAuth = FirebaseAuth.getInstance();
 
         if(userAuth.getCurrentUser() != null ){
-            Toast.makeText(getApplicationContext(),"You have logged in!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"You are already logged in!",Toast.LENGTH_SHORT).show();
             finish();
         }
 
@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent1=new Intent(getApplicationContext(),SignUpActivity.class);
                 startActivity(intent1);
+                finish();
             }
         });
 
@@ -61,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                         edit_email.setHintTextColor(getColor(R.color.colorAccent));
                     }
                     if(password.isEmpty()){
-                        Toast.makeText(getApplicationContext(),"Password field shoudn't be empty",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Password field shouldn't be empty",Toast.LENGTH_SHORT).show();
                     }
                     return;
                 }
@@ -84,11 +85,11 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     Log.d("SINGLETAG", "signInWithEmail:success");
+                                    Toast.makeText(getApplicationContext(), "Login Successful! You are now logged in.",Toast.LENGTH_SHORT).show();
                                     finish();
                                 } else {
                                     Log.d("SINGLETAG", "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Authentication failed.",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

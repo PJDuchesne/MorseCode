@@ -31,6 +31,8 @@ public class Settings extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     userAuth.signOut();
+                    Toast.makeText(getApplicationContext(),"You have been signed out!",Toast.LENGTH_SHORT).show();
+                    v.setVisibility(View.INVISIBLE);
                 }
             });
         }else{
@@ -39,7 +41,6 @@ public class Settings extends AppCompatActivity {
 
         final SettingsSingleton s=SettingsSingleton.getInstance();
 
-        Toast.makeText(getApplicationContext(),"HEY!",Toast.LENGTH_SHORT).show();
 
         haptic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
