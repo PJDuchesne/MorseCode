@@ -50,6 +50,8 @@ public class DUMMY extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dummy);
 
+        txt_info = findViewById(R.id.txt_info);
+
         //User Init
         userAuth = FirebaseAuth.getInstance();
         user = userAuth.getCurrentUser();
@@ -60,7 +62,24 @@ public class DUMMY extends AppCompatActivity {
         DatabaseReference firebaseReferenceOne = firebaseDBInstance.getReference("one");
         DatabaseReference firebaseReferencePublic = firebaseDBInstance.getReference("public");
 
-
+        Button btn_usrInfoTest = findViewById(R.id.usrInfoTest);
+        btn_usrInfoTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfo uInfo = new UserInfo();
+                uInfo.setCompleted(5); //Lesson 6 Completed
+                uInfo.getCompletedLessons(new UserInfoListener() {//Print completed lessons to Toast
+                    @Override
+                    public void onArrayFetched(boolean[] lessonsCompleted) {
+                        if(lessonsCompleted != null) {
+                            Toast.makeText(getApplicationContext(),
+                                    Arrays.toString(lessonsCompleted),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
 
         //Screen Elements
         btn_signUp = findViewById(R.id.btn_signUp);
@@ -154,14 +173,17 @@ public class DUMMY extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                String key = firebaseReferenceUser.child("info").push().getKey();
                Map<String, Object> updates = new HashMap<>();
                updates.put("/info/"+key,txt_info.getText().toString());
                firebaseReferenceUser.updateChildren(updates);
+               */
             }
         });
-
     }
+
+
 
     @Override
     protected void onStart(){
@@ -179,7 +201,8 @@ public class DUMMY extends AppCompatActivity {
         user = userAuth.getCurrentUser();
 
         if(user != null){
-            getUserCompletedLessons();
+            //getUserCompletedLessons();
+
             lv2.setVisibility(View.VISIBLE);
             firebaseReferenceUser = firebaseDBInstance.getReference("users").child(user.getUid());
             firebaseDBInstance.getReference("users").child(user.getUid()).child("lessonsCompleted").addValueEventListener(new ValueEventListener() {
@@ -268,10 +291,11 @@ public class DUMMY extends AppCompatActivity {
      * Setting a lesson as completed is done with this single line where N is the lesson competed
      *firebaseDBInstance.getReference("users").child(user.getUid()).child("lessonsCompleted").child("N").setValue(1);
      * */
+    /*
     //private FirebaseUser user;
     //private FirebaseAuth userAuth;
     //private FirebaseDatabase firebaseDBInstance;
-    private Boolean[] lessonsCompleted = new Boolean[10];
+    private boolean[] lessonsCompleted = new boolean[10];
     private void getUserCompletedLessons(){
         //firebaseDBInstance = FirebaseDatabase.getInstance();
         //User Init
@@ -295,5 +319,6 @@ public class DUMMY extends AppCompatActivity {
             }
         });
     }
+    */
 
 }
