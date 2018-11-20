@@ -15,7 +15,8 @@ import android.widget.TextView;
 public class BrainTestingActivity extends AppCompatActivity {
     private MorseBrain brain;
     private View circleView, testView, resetView;
-    private TextView currentMorseTextView, currentCharTextView, overallCharsTextView, testOutputView;
+    private TextView currentMorseTextView, currentCharTextView, overallCharsTextView,
+                     testOutputViewOn, testOutputViewOff;
     private ProgressBar currentProgressBar;
     private Driver feedbackDriver;
 
@@ -57,7 +58,8 @@ public class BrainTestingActivity extends AppCompatActivity {
         currentMorseTextView    = findViewById(R.id.currentMorseTextView);
         currentCharTextView     = findViewById(R.id.currentCharTextView);
         overallCharsTextView    = findViewById(R.id.overallCharsTextView);
-        testOutputView          = findViewById(R.id.outputView);
+        testOutputViewOn        = findViewById(R.id.outputViewOn);
+        testOutputViewOff       = findViewById(R.id.outputViewOff);
 
         feedbackDriver = new Driver( (Vibrator) this.getSystemService(VIBRATOR_SERVICE),(CameraManager) getSystemService(Context.CAMERA_SERVICE),getApplicationContext());
         brain = new MorseBrain(this, currentMorseTextView, currentCharTextView, overallCharsTextView, currentProgressBar, feedbackDriver);
@@ -100,7 +102,7 @@ public class BrainTestingActivity extends AppCompatActivity {
             }
         });
 
-        testOutputView.setOnClickListener(new View.OnClickListener() {
+        testOutputViewOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Attempt to output a hardcoded string for testing
@@ -110,6 +112,31 @@ public class BrainTestingActivity extends AppCompatActivity {
             }
         });
 
+        testOutputViewOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                brain.EndOutput();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStop(){
+        brain.EndOutput();
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause(){
+        brain.EndOutput();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy(){
+        brain.EndOutput();
+        super.onDestroy();
     }
 
 

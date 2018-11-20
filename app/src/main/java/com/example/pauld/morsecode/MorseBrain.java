@@ -21,13 +21,9 @@ public class MorseBrain {
     private interSymbolTask symbolTask;
     private interCharTask charTask;
     private interWordTask wordTask;
-    private outputDotDashTask dotDashTask;
-    private outputSilenceTask silenceTask;
     private Handler uiHandler; // To allow the timer thread to change textViews
     private ObjectAnimator progressAnimation;
     private Toast currentToast;
-    private volatile boolean outputFlag1;
-    private volatile boolean outputFlag2;
 
     // Settings
     private boolean EndOfWordTaskOn;
@@ -46,6 +42,15 @@ public class MorseBrain {
 
     // Sound/Vibrate/Light Driver
     private Driver feedbackDriver;
+
+    // Handlers to handle outputting Morse Code
+    private final Handler delayHandler1 = new Handler();
+    private final Handler delayHandler2 = new Handler();
+    private String TokenizedOutput[];
+    private String CurrentMorseOutput;
+    private int OutputWordIdx;
+    private int OutputCharIdx;
+    private int OutputMorseIdx;
 
     // TODO: Add input variable to change standard
     public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView, TextView inputOverallTextView, ProgressBar inputProgressBar, Driver inputDriver) {
@@ -258,65 +263,106 @@ public class MorseBrain {
             Log.d("MorseBrain", "Invalid Character found in OutputMorse");
         }
 
-        // Split string by spaces
-        String Tokenized[] = MorseCodeToOutput.split("\\s+");
-        String currentCharString;
-        String currentMorseString;
+        if(MorseCodeToOutput.length() == 0) {
+            Log.d("MorseBrain", "Empty OutputMorse input");
+        }
 
-        // Iterate word by word, performing output
-        for(int i = 0; i < Tokenized.length; i++) {
-            // Display current word
-            overallTextView.setText(Tokenized[i]);
+        // TODO: Need to check for an input of all spaces
 
-            for(int n = 0; n < Tokenized[i].length(); n++) {
-                currentCharString = Tokenized[i].substring(0, 1);
-                currentMorseString = GiveLetterGetMorse(currentCharString);
+        // Set up tail chaining values
+        TokenizedOutput = MorseCodeToOutput.split("\\s+");
+        String firstCharString = TokenizedOutput[0].substring(0, 1);
+        CurrentMorseOutput = GiveLetterGetMorse(firstCharString);
+        OutputWordIdx = 0;
+        OutputCharIdx = 0;
+        OutputMorseIdx = 0;
 
-                // Display Current Character as Char and as Morse
-                charTextView.setText(currentCharString);
-                morseTextView.setText(currentMorseString);
+        overallTextView.setText(TokenizedOutput[OutputWordIdx]);
+        charTextView.setText(firstCharString);
+        morseTextView.setText(CurrentMorseOutput);
 
-                OutputMorseChar(currentMorseString);
+        // Call First Tail Chaining Function
+        TailChain();
+    }
+
+    private void TailChain() {
+        // Maybe check a global boolean flag here to end this process
+
+        // Check for end of character and iterate to next character index if necessary
+        if (OutputMorseIdx >= CurrentMorseOutput.length()) {
+            OutputCharIdx++;
+            OutputMorseIdx = 0; // Reset morse index
+
+            // Temporarily blank morse text view as the character switches
+            morseTextView.setText(""); // Char Text view stays the same to give the user continuity
+
+            // Check for end of word and iterate to next word index if necessary
+            if (OutputCharIdx >= TokenizedOutput[OutputWordIdx].length()) {
+                OutputWordIdx++;
+                OutputCharIdx = 0; // Reset char index
+
+                // Check for end of words and return if finished
+                if (OutputWordIdx >= TokenizedOutput.length) return;
+
+                // Update text view
+                overallTextView.setText(TokenizedOutput[OutputWordIdx]);
+
+                // Add delay between words and return to allow it to run
+                delayHandler2.postDelayed(new Runnable(){
+                    @Override
+                    public void run(){
+                        TailChain();
+                    }
+                }, 7*timeUnit); // Delay between words is 7 time units
+                return;
+            }
+            else {
+                // Add delay between characters and return to allow it to run
+                delayHandler2.postDelayed(new Runnable(){
+                    @Override
+                    public void run(){
+                        String currentCharString = TokenizedOutput[OutputWordIdx].substring(OutputCharIdx, OutputCharIdx + 1);
+                        CurrentMorseOutput = GiveLetterGetMorse(currentCharString);
+
+                        charTextView.setText(currentCharString);
+                        morseTextView.setText(CurrentMorseOutput);
+
+                        TailChain();
+                    }
+                }, 3*timeUnit); // Delay between characters is 3 time units
+                return;
             }
         }
+
+        feedbackDriver.on();
+        delayHandler1.postDelayed(new Runnable(){
+            @Override
+            public void run(){
+                // Turn off feedback
+                feedbackDriver.off();
+
+                // Set delay function to start next character after a time unit of silence
+                delayHandler2.postDelayed(new Runnable(){
+                    @Override
+                    public void run(){
+                        OutputMorseIdx++;
+
+                        TailChain();
+                    }
+                }, timeUnit); // Delay between dots & dashes within a character is 1 time unit
+            }
+        }, ((CurrentMorseOutput.charAt(OutputMorseIdx) == '-') ? 3 : 1)*timeUnit);
     }
 
-    private void OutputMorseChar(String morseString) {
-        // Make the sounds!
-        for (int i = 0; i < morseString.length(); i++) {
-            // Reset flags for this character
-            outputFlag1 = true;
-            outputFlag2 = true;
+    public void EndOutput() {
+        delayHandler1.removeCallbacksAndMessages(null);
+        delayHandler2.removeCallbacksAndMessages(null);
 
-            // Turn on feedback
-            feedbackDriver.on();
+        feedbackDriver.off();
 
-            // Schedule timer to turn feedback off
-            dotDashTask = new outputDotDashTask();
-            morseTimer.schedule(dotDashTask, ((morseString.charAt(i) == '-') ? 3 : 1)*timeUnit);
-
-            while(outputFlag1 == true) {}
-
-            silenceTask = new outputSilenceTask();
-            morseTimer.schedule(silenceTask, timeUnit);
-
-            while(outputFlag2 == true) {}
-        }
-    }
-
-    private class outputDotDashTask extends TimerTask {
-        @Override
-        public void run() {
-            feedbackDriver.off();
-            outputFlag1 = false;
-        }
-    }
-
-    private class outputSilenceTask extends TimerTask {
-        @Override
-        public void run() {
-            outputFlag2 = false;
-        }
+        morseTextView.setText("");
+        charTextView.setText("");
+        overallTextView.setText("");
     }
 
 }
