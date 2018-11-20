@@ -265,7 +265,8 @@ public class DUMMY extends AppCompatActivity {
     /**
      * This method fetches the user data and populates an array of lessons completed
      *
-     *
+     * Setting a lesson as completed is done with this single line where N is the lesson competed
+     *firebaseDBInstance.getReference("users").child(user.getUid()).child("lessonsCompleted").child("N").setValue(1);
      * */
     //private FirebaseUser user;
     //private FirebaseAuth userAuth;
