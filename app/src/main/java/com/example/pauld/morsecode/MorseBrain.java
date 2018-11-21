@@ -52,6 +52,8 @@ public class MorseBrain {
     private int OutputCharIdx;
     private int OutputMorseIdx;
 
+    private volatile boolean currentlyOutputting;
+
     public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView,
                       TextView inputOverallTextView, ProgressBar inputProgressBar,
                       Driver inputDriver, boolean endOfCharTaskFlag, boolean endOfWordTaskFlag) {
@@ -80,6 +82,7 @@ public class MorseBrain {
         morseTimer = new Timer();
         uiHandler = new Handler();
         currentToast = null;
+        currentlyOutputting = false;
 
         parentContext = context;
 
@@ -296,8 +299,16 @@ public class MorseBrain {
     //
 
     public void OutputMorse(String MorseCodeToOutput) {
+        if (currentlyOutputting) {
+            Log.d("MorseBrain::OutputMorse", "Already outputting!");
+
+            EndOutput();
+        }
+
+        currentlyOutputting = true;
+
         // Check that the string is proper characters
-        if (!MorseCodeToOutput.matches("[a-zA-Z ]+")) {
+        if (!MorseCodeToOutput.matches("[a-zA-Z0-9 ]+")) {
             Log.d("MorseBrain::OutputMorse", "Invalid Input: Invalid characters!");
             return;
         }
@@ -403,6 +414,8 @@ public class MorseBrain {
         morseTextView.setText(" ");
         charTextView.setText(" ");
         overallTextView.setText(" ");
+
+        currentlyOutputting = false;
     }
 
 }
