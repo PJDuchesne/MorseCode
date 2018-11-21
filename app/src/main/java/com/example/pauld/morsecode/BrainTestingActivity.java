@@ -10,13 +10,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 public class BrainTestingActivity extends AppCompatActivity {
     private MorseBrain brain;
     private View circleView, testView, resetView;
     private TextView currentMorseTextView, currentCharTextView, overallCharsTextView,
-                     testOutputViewOn, testOutputViewOff;
+                     testOutputViewOn, testOutputViewOff, nextCharTest, zapBrain;
+    private Switch charSwitch, wordSwitch;
     private ProgressBar currentProgressBar;
     private Driver feedbackDriver;
 
@@ -60,9 +62,14 @@ public class BrainTestingActivity extends AppCompatActivity {
         overallCharsTextView    = findViewById(R.id.overallCharsTextView);
         testOutputViewOn        = findViewById(R.id.outputViewOn);
         testOutputViewOff       = findViewById(R.id.outputViewOff);
+        nextCharTest            = findViewById(R.id.testNextChar);
+        zapBrain                = findViewById(R.id.testNewBrain);
+
+        charSwitch              = findViewById(R.id.endCharSwitch);
+        wordSwitch              = findViewById(R.id.endWordSwitch);
 
         feedbackDriver = new Driver( (Vibrator) this.getSystemService(VIBRATOR_SERVICE),(CameraManager) getSystemService(Context.CAMERA_SERVICE),getApplicationContext());
-        brain = new MorseBrain(this, currentMorseTextView, currentCharTextView, overallCharsTextView, currentProgressBar, feedbackDriver);
+        brain = new MorseBrain(this, currentMorseTextView, currentCharTextView, overallCharsTextView, currentProgressBar, feedbackDriver, charSwitch.isChecked(), wordSwitch.isChecked());
 
         circleView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -86,7 +93,8 @@ public class BrainTestingActivity extends AppCompatActivity {
         resetView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                brain.ElectricShock();
+//                brain.ElectricShock();
+                brain.ResetCurrentChar();
             }
         });
 
@@ -119,6 +127,25 @@ public class BrainTestingActivity extends AppCompatActivity {
             }
         });
 
+        nextCharTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                brain.SignalCharEnd();
+            }
+        });
+
+        zapBrain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                brain.EndOutput();
+
+                brain = new MorseBrain(getApplicationContext(), currentMorseTextView,
+                        currentCharTextView, overallCharsTextView, currentProgressBar,
+                        feedbackDriver, charSwitch.isChecked(), wordSwitch.isChecked());
+
+            }
+        });
+
     }
 
     @Override
@@ -138,6 +165,4 @@ public class BrainTestingActivity extends AppCompatActivity {
         brain.EndOutput();
         super.onDestroy();
     }
-
-
 }
