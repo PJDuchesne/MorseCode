@@ -13,17 +13,19 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Switch haptic = findViewById(R.id.haptic);
         Switch sound = findViewById(R.id.sound);
+        Switch light = findViewById(R.id.light);
         SeekBar iSpeed = findViewById(R.id.seekBar);
+        final SeekBar frequency = findViewById(R.id.seekBar2);
         Button bLogout = findViewById(R.id.btnLogout);
         final SettingsSingleton s=SettingsSingleton.getInstance();
 
         haptic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Log.v("Switch State=",""+b);
+//                Log.v("Switch State=",""+b);
                 if(b==true){
                     s.setHapticEnabled(true);
                 }
@@ -38,7 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
         sound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Log.v("Switch State=",""+b);
+//                Log.v("Switch State=",""+b);
                 if(b==true){
                     s.setSoundEnabled(true);
                 }
@@ -50,11 +52,25 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        light.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                Log.v("Switch State=",""+b);
+                if(b==true){
+                    s.setLightEnabled(true);
+                }
+                else{
+                    s.setLightEnabled(false);
+                }
+                Log.v("lightEnabled=",""+s.lightEnabled);
+
+            }
+        });
 
         iSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                Log.v("seek bar value=",""+i);
+//                Log.v("seek bar value=",""+i);
                 s.setInputSpeed(i);
                 Log.v("input speed=",""+s.inputSpeed);
 
@@ -71,6 +87,33 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+
+        frequency.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                Log.v("seek bar value=",""+i);
+                if (i > 0 && i <= 12) {
+                    s.setFrequency(440+((i-1)*40));
+                }
+                else
+                {
+                    s.setFrequency(0);
+                }
+
+                Log.v("frequency=",""+s.frequency);
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
 

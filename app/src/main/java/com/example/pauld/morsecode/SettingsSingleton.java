@@ -6,7 +6,10 @@ public class SettingsSingleton {
     private static volatile SettingsSingleton sInstance;
     public boolean hapticEnabled=true;
     public boolean soundEnabled=true;
+    public boolean lightEnabled=true;
     public int inputSpeed=3;
+    public int frequency=440;
+
 
     private SettingsSingleton() {
         if(sInstance != null){
@@ -39,6 +42,15 @@ public class SettingsSingleton {
         return this.soundEnabled;
     }
 
+    public void setLightEnabled(boolean lightEnabled){
+        this.lightEnabled=lightEnabled;
+    }
+
+    public boolean getLightEnabled(){
+        return this.lightEnabled;
+    }
+
+
     public void setInputSpeed(int inputSpeed){
         this.inputSpeed=inputSpeed;
     }
@@ -47,5 +59,12 @@ public class SettingsSingleton {
         return this.inputSpeed;
     }
 
-}
+    public void setFrequency(int frequency){
+        this.frequency=frequency;
+    }
 
+    public int getFrequency(){
+        return this.frequency;
+    }
+
+}
