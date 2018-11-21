@@ -22,6 +22,8 @@
     <dimen name="TextToMorseOutputTextSize">40sp</dimen>
     <dimen name="TextToMorseMorseCodeSize">50sp</dimen>
 
+    <dimen name="MorseDictionaryItemSize">8sp</dimen>
+
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
