@@ -3,6 +3,8 @@
     <string name="MorseCodeDot">•</string>
     <string name="MorseCodeDash">−</string>
     <string name="ResetBtn">Reset</string>
+    <string name="AddLetterBtn">Add Letter</string>
+    <string name="ResetInputBtn">Clear Input</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

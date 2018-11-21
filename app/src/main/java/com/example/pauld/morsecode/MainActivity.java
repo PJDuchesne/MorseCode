@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         btn_morse_to_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), training_screen_landing_page.class); // TODO: Update with real page
+                Intent intent=new Intent(getApplicationContext(), FreestyleInput.class);
                 startActivity(intent);
             }
         });

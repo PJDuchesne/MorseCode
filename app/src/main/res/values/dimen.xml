@@ -17,6 +17,8 @@
     <dimen name="LessonLandingTitleMarginTop">20dp</dimen>
     <dimen name="LessonLandingTitleTextSize">50sp</dimen>
     <dimen name="LessonLandingListMarginTop">20dp</dimen>
+    <dimen name="FreestyleAddLetterTextSize">17sp</dimen>
+    <dimen name="FreestyleCurrentInputSize">45sp</dimen>
 
     <dimen name="TextToMorseInputTextSize">30sp</dimen>
     <dimen name="TextToMorseOutputTextSize">40sp</dimen>
