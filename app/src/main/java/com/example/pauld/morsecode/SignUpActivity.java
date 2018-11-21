@@ -22,7 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private Button btn_signUp,btn_exit;
     private EditText edit_email ,edit_pass ,edit_name;
-    private String name,password,email;
+    private String password,email;//,name;
     private FirebaseAuth userAuth;
     private FirebaseDatabase firebaseDBInstance;
 
@@ -40,7 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
         btn_signUp = findViewById(R.id.btn_signUp);
         edit_email = findViewById(R.id.edit_email);
         edit_pass = findViewById(R.id.edit_pass);
-        edit_name = findViewById(R.id.edit_name);
+        //edit_name = findViewById(R.id.edit_name);
         btn_exit = findViewById(R.id.btn_exit);
 
         btn_exit.setOnClickListener(new View.OnClickListener(){
@@ -54,17 +54,19 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 email = edit_email.getText().toString();
-                name = edit_name.getText().toString();
+                //name = edit_name.getText().toString();
                 password = edit_pass.getText().toString();
-                if(email.isEmpty() || password.isEmpty() || name.isEmpty()){
+                if(email.isEmpty() || password.isEmpty() ){
                     if(email.isEmpty()){
                         edit_email.setHint("Enter a valid email");
                         edit_email.setHintTextColor(getColor(R.color.colorAccent));
                     }
+                    /*
                     if(name.isEmpty()){
                         edit_name.setHint("Enter a name");
                         edit_name.setHintTextColor(getColor(R.color.colorAccent));
                     }
+                    */
                     if(password.isEmpty()){
                         Toast.makeText(getApplicationContext(),"Password field shoudn't be empty",Toast.LENGTH_SHORT).show();
                     }
@@ -88,11 +90,22 @@ public class SignUpActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
-                                    Log.d("SINGLETAG", "createUserWithEmail:success");
+                                    //Log.d("SINGLETAG", "createUserWithEmail:success");
                                     FirebaseUser user = userAuth.getCurrentUser();
                                     DatabaseReference userData = firebaseDBInstance.getReference("users").child(user.getUid());
-                                    userData.child("name").setValue(name);
+                                    //userData.child("name").setValue(name);
                                     userData.child("ID").setValue(user.getUid());
+                                    userData.child("lessonsCompleted").child("0").setValue(0);
+                                    userData.child("lessonsCompleted").child("1").setValue(0);
+                                    userData.child("lessonsCompleted").child("2").setValue(0);
+                                    userData.child("lessonsCompleted").child("3").setValue(0);
+                                    userData.child("lessonsCompleted").child("4").setValue(0);
+                                    userData.child("lessonsCompleted").child("5").setValue(0);
+                                    userData.child("lessonsCompleted").child("6").setValue(0);
+                                    userData.child("lessonsCompleted").child("7").setValue(0);
+                                    userData.child("lessonsCompleted").child("8").setValue(0);
+                                    userData.child("lessonsCompleted").child("9").setValue(0);
+                                    Toast.makeText(SignUpActivity.this, "Account Created! You are now logged in.",Toast.LENGTH_SHORT).show();
                                     finish();
                                 } else {
                                     // If sign in fails, display a message to the user.

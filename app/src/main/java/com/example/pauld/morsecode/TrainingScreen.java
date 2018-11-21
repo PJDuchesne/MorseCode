@@ -1,9 +1,14 @@
 package com.example.pauld.morsecode;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +21,6 @@ import org.w3c.dom.Text;
 import java.util.StringTokenizer;
 
 public class TrainingScreen extends AppCompatActivity{
-
     private String lessonString, currentWordStr, currentLetterStr;
     private StringTokenizer lessonTokens;
     private TextView currentWord, currentLetter, currentLetterMorse, currentInputLetter, currentInputLetterMorse;
@@ -26,6 +30,7 @@ public class TrainingScreen extends AppCompatActivity{
     private int wordCharIndex;
     private MorseBrain brain;
     private ProgressBar progressBar;
+    private Driver feedbackDriver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +50,16 @@ public class TrainingScreen extends AppCompatActivity{
         completedLesson = false;
         TextView tempTextView = findViewById(R.id.temptextview);
 
-        brain = new MorseBrain(this, currentInputLetterMorse, currentInputLetter, tempTextView, progressBar);
+        feedbackDriver = new Driver( (Vibrator) this.getSystemService(VIBRATOR_SERVICE),
+                  (CameraManager) getSystemService(Context.CAMERA_SERVICE),getApplicationContext());
+        brain = new MorseBrain(this, currentInputLetterMorse, currentInputLetter, tempTextView, progressBar, feedbackDriver);
         brain.ElectricShock();
 
         Intent intent = getIntent();
 
-        // FOR TESTING: hardcoding the lessonString
-        lessonString = "TEST LESSON";
+        lessonString = intent.getStringExtra("LESSON_STRING");
+        if(lessonString.isEmpty())
+            lessonString = "DEFAULT INPUT LESSON";
         lessonString = lessonString.toUpperCase();
         // Tokenize the lesson by spaces.
         lessonTokens = new StringTokenizer(lessonString, " ");
@@ -92,7 +100,7 @@ public class TrainingScreen extends AppCompatActivity{
             return;
         }
         currentWordStr = lessonTokens.nextToken();
-        currentWord.setText(currentWordStr);
+        //currentWord.setText(currentWordStr);
         newWord = true;
         gotoNextLetter();
     }
@@ -107,8 +115,11 @@ public class TrainingScreen extends AppCompatActivity{
             return;
         }
         currentLetterStr = currentWordStr.substring(wordCharIndex, wordCharIndex + 1);
-        wordCharIndex++;
         currentLetter.setText(currentLetterStr);
+        SpannableString underlinedString = new SpannableString(currentWordStr);
+        underlinedString.setSpan(new UnderlineSpan(), wordCharIndex, wordCharIndex+1, 0);
+        wordCharIndex++;
+        currentWord.setText(underlinedString);
         currentLetterMorse.setText(getMorseString(currentLetterStr));
         resetButtonInput();
     }

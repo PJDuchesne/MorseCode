@@ -3,17 +3,16 @@ package com.example.pauld.morsecode;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.util.Log;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.example.pauld.morsecode.MorseCodeStandards.GiveLetterGetMorse;
 
 public class MorseBrain {
     // Local variables
@@ -41,8 +40,20 @@ public class MorseBrain {
     private Context parentContext;
     private ProgressBar progressBar;
 
+    // Sound/Vibrate/Light Driver
+    private Driver feedbackDriver;
+
+    // Handlers to handle outputting Morse Code
+    private final Handler delayHandler1 = new Handler();
+    private final Handler delayHandler2 = new Handler();
+    private String TokenizedOutput[];
+    private String CurrentMorseOutput;
+    private int OutputWordIdx;
+    private int OutputCharIdx;
+    private int OutputMorseIdx;
+
     // TODO: Add input variable to change standard
-    public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView, TextView inputOverallTextView, ProgressBar inputProgressBar) {
+    public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView, TextView inputOverallTextView, ProgressBar inputProgressBar, Driver inputDriver) {
         InternationalStandardTrie = new MorseTrie(MorseCodeStandards.InternationalStandard);
         morseTextView = inputMorseTextView;
         charTextView = inputCharTextView;
@@ -56,6 +67,8 @@ public class MorseBrain {
 
         EndOfWordTaskOn = true;
         EndOfCharTaskOn = false;
+
+        feedbackDriver = inputDriver;
 
         ElectricShock();
     }
@@ -127,6 +140,9 @@ public class MorseBrain {
     // PUBLIC API BELOW
 
     public void StartInput() {
+        // Start any feedback
+        feedbackDriver.on();
+
         // Cancel any displaying toast
         if (currentToast != null) currentToast.cancel();
 
@@ -141,6 +157,9 @@ public class MorseBrain {
     }
 
     public void EndInput() {
+        // Turn feedback off
+        feedbackDriver.off();
+
         // Reset progress bar and toast
         ResetProgressBar();
         if (currentToast != null) currentToast.cancel();
@@ -235,4 +254,115 @@ public class MorseBrain {
         if (progressAnimation != null) progressAnimation.cancel();
         progressBar.setProgress(0);
     }
+
+    // API for Output
+
+    public void OutputMorse(String MorseCodeToOutput) {
+        // Check that the string is proper characters
+        if (!MorseCodeToOutput.matches("[a-zA-Z ]+")) {
+            Log.d("MorseBrain", "Invalid Character found in OutputMorse");
+        }
+
+        if(MorseCodeToOutput.length() == 0) {
+            Log.d("MorseBrain", "Empty OutputMorse input");
+        }
+
+        // TODO: Need to check for an input of all spaces
+
+        // Set up tail chaining values
+        TokenizedOutput = MorseCodeToOutput.split("\\s+");
+        String firstCharString = TokenizedOutput[0].substring(0, 1);
+        CurrentMorseOutput = GiveLetterGetMorse(firstCharString);
+        OutputWordIdx = 0;
+        OutputCharIdx = 0;
+        OutputMorseIdx = 0;
+
+        overallTextView.setText(TokenizedOutput[OutputWordIdx]);
+        charTextView.setText(firstCharString);
+        morseTextView.setText(CurrentMorseOutput);
+
+        // Call First Tail Chaining Function
+        TailChain();
+    }
+
+    private void TailChain() {
+        // Maybe check a global boolean flag here to end this process
+
+        // Check for end of character and iterate to next character index if necessary
+        if (OutputMorseIdx >= CurrentMorseOutput.length()) {
+            OutputCharIdx++;
+            OutputMorseIdx = 0; // Reset morse index
+
+            // Temporarily blank morse text view as the character switches
+            morseTextView.setText(""); // Char Text view stays the same to give the user continuity
+
+            // Check for end of word and iterate to next word index if necessary
+            if (OutputCharIdx >= TokenizedOutput[OutputWordIdx].length()) {
+                OutputWordIdx++;
+                OutputCharIdx = 0; // Reset char index
+
+                // Check for end of words and return if finished
+                if (OutputWordIdx >= TokenizedOutput.length) return;
+
+                // Update text view
+                overallTextView.setText(TokenizedOutput[OutputWordIdx]);
+
+                // Add delay between words and return to allow it to run
+                delayHandler2.postDelayed(new Runnable(){
+                    @Override
+                    public void run(){
+                        TailChain();
+                    }
+                }, 7*timeUnit); // Delay between words is 7 time units
+                return;
+            }
+            else {
+                // Add delay between characters and return to allow it to run
+                delayHandler2.postDelayed(new Runnable(){
+                    @Override
+                    public void run(){
+                        String currentCharString = TokenizedOutput[OutputWordIdx].substring(OutputCharIdx, OutputCharIdx + 1);
+                        CurrentMorseOutput = GiveLetterGetMorse(currentCharString);
+
+                        charTextView.setText(currentCharString);
+                        morseTextView.setText(CurrentMorseOutput);
+
+                        TailChain();
+                    }
+                }, 3*timeUnit); // Delay between characters is 3 time units
+                return;
+            }
+        }
+
+        feedbackDriver.on();
+        delayHandler1.postDelayed(new Runnable(){
+            @Override
+            public void run(){
+                // Turn off feedback
+                feedbackDriver.off();
+
+                // Set delay function to start next character after a time unit of silence
+                delayHandler2.postDelayed(new Runnable(){
+                    @Override
+                    public void run(){
+                        OutputMorseIdx++;
+
+                        TailChain();
+                    }
+                }, timeUnit); // Delay between dots & dashes within a character is 1 time unit
+            }
+        }, ((CurrentMorseOutput.charAt(OutputMorseIdx) == '-') ? 3 : 1)*timeUnit);
+    }
+
+    public void EndOutput() {
+        delayHandler1.removeCallbacksAndMessages(null);
+        delayHandler2.removeCallbacksAndMessages(null);
+
+        feedbackDriver.off();
+
+        morseTextView.setText("");
+        charTextView.setText("");
+        overallTextView.setText("");
+    }
+
 }

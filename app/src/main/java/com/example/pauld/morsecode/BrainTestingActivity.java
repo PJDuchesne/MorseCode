@@ -1,5 +1,8 @@
 package com.example.pauld.morsecode;
 
+import android.content.Context;
+import android.hardware.camera2.CameraManager;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +15,10 @@ import android.widget.TextView;
 public class BrainTestingActivity extends AppCompatActivity {
     private MorseBrain brain;
     private View circleView, testView, resetView;
-    private TextView currentMorseTextView, currentCharTextView, overallCharsTextView;
+    private TextView currentMorseTextView, currentCharTextView, overallCharsTextView,
+                     testOutputViewOn, testOutputViewOff;
     private ProgressBar currentProgressBar;
+    private Driver feedbackDriver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +58,11 @@ public class BrainTestingActivity extends AppCompatActivity {
         currentMorseTextView    = findViewById(R.id.currentMorseTextView);
         currentCharTextView     = findViewById(R.id.currentCharTextView);
         overallCharsTextView    = findViewById(R.id.overallCharsTextView);
+        testOutputViewOn        = findViewById(R.id.outputViewOn);
+        testOutputViewOff       = findViewById(R.id.outputViewOff);
 
-        brain = new MorseBrain(this, currentMorseTextView, currentCharTextView, overallCharsTextView, currentProgressBar);
+        feedbackDriver = new Driver( (Vibrator) this.getSystemService(VIBRATOR_SERVICE),(CameraManager) getSystemService(Context.CAMERA_SERVICE),getApplicationContext());
+        brain = new MorseBrain(this, currentMorseTextView, currentCharTextView, overallCharsTextView, currentProgressBar, feedbackDriver);
 
         circleView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -93,6 +101,42 @@ public class BrainTestingActivity extends AppCompatActivity {
                 if (tmpIndex >= testTable.length) tmpIndex = 0;
             }
         });
+
+        testOutputViewOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Attempt to output a hardcoded string for testing
+                String outputTest = "Foobar Test123";
+
+                brain.OutputMorse(outputTest);
+            }
+        });
+
+        testOutputViewOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                brain.EndOutput();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStop(){
+        brain.EndOutput();
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause(){
+        brain.EndOutput();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy(){
+        brain.EndOutput();
+        super.onDestroy();
     }
 
 

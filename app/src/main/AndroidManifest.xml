@@ -2,6 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pauld.morsecode">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera.flash" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,33 +19,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity
             android:name=".DUMMY"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".TrainingScreen">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BrainTestingActivity"></activity>
         <activity
-            android:name=".LoginScreen_1"
-            android:label="LoginScreen"
+            android:name=".LoginActivity"
+            android:label="@string/LoginScreenNav"
             android:parentActivityName=".MainActivity" />
+        <activity android:name=".TrainingScreen" />
+        <activity android:name=".BrainTestingActivity" />
+        <activity
+            android:name=".training_screen_landing_page"
+            android:label="@string/TrainingScreenNav"
+            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".InputOutput"
-            android:label="Input/Output"
-            android:parentActivityName=".MainActivity" />
+            android:label="@string/InputOutputNav"
+            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".ChatScreen"
-            android:label="Chat Screen"
-            android:parentActivityName=".MainActivity" />
+            android:label="@string/ChatScreenNav"
+            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".Settings"
             android:label="Settings"
@@ -44,9 +57,7 @@
             android:name=".TrainingScreen_1"
             android:label="TrainingScreen_1"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".BrainTestingActivity" />
-
-        <activity android:name=".InitialScreen"></activity>
+        <activity android:name=".Lessons"></activity>
     </application>
 
 </manifest>
