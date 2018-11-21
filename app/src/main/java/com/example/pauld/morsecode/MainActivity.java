@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         btn_txt_to_morse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), Lessons.class); // TODO: Update with real page
+                Intent intent=new Intent(getApplicationContext(), textToMorseActivity.class); // TODO: Update with real page
                 startActivity(intent);
             }
         });

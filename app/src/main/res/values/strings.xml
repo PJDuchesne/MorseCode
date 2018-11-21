@@ -32,4 +32,8 @@
     <string name="MediumWordLesson2">USUAL TWICE SPRING RECORD POLICE NEEDLE LAUGH JELLY</string>
     <string name="LongNumberLesson">11 63 128 255 512 1023 9305 7542 6422 23085 84757</string>
     <string name="LongWordLesson">AUTUMN BUSINESS DANGEROUS HUSBAND KITCHEN NEWSPAPER PHOTOGRAPH</string>
+    <string name="defaultTtoMHint">Enter text you want to convert to Morse!</string>
+    <string name="defaultTtoMWord">Word</string>
+    <string name="defaultTtoMLetter">W</string>
+    <string name="defaultTtoMMorseCode">•--</string>
 </resources>

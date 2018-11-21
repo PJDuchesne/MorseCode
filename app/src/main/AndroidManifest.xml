@@ -40,15 +40,15 @@
         <activity
             android:name=".training_screen_landing_page"
             android:label="@string/TrainingScreenNav"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".InputOutput"
             android:label="@string/InputOutputNav"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ChatScreen"
             android:label="@string/ChatScreenNav"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".Settings"
             android:label="Settings"
@@ -59,6 +59,7 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".Lessons"></activity>
         <activity android:name=".FreestyleInput"></activity>
+        <activity android:name=".textToMorseActivity"></activity>
     </application>
 
 </manifest>
