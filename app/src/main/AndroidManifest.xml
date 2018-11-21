@@ -9,11 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".LoginActivity" ></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".DUMMY" android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".DUMMY"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".TrainingScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BrainTestingActivity">
-        </activity>
+        <activity android:name=".BrainTestingActivity"></activity>
         <activity
             android:name=".LoginScreen_1"
             android:label="LoginScreen"
@@ -42,8 +43,10 @@
         <activity
             android:name=".TrainingScreen_1"
             android:label="TrainingScreen_1"
-            android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".BrainTestingActivity"></activity>
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".BrainTestingActivity" />
+
+        <activity android:name=".InitialScreen"></activity>
     </application>
 
 </manifest>
