@@ -113,4 +113,61 @@
         android:textAlignment="center"
         android:textSize="20sp"/>
 
+    <TextView
+        android:id="@+id/testNewBrain"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="50dp"
+        android:layout_alignTop="@id/testView"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Zap"
+        android:textAlignment="center"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/testNextChar"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="235dp"
+        android:layout_alignTop="@id/testView"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Next Ch"
+        android:textAlignment="center"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/testNextChar"
+        android:layout_alignBottom="@+id/endCharSwitch"
+        android:text="Char" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/progressBar"
+        android:layout_alignBottom="@+id/endCharSwitch"
+        android:layout_marginEnd="-7dp"
+        android:layout_marginBottom="-30dp"
+        android:text="Word" />
+
+    <Switch
+        android:id="@+id/endCharSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <Switch
+        android:id="@+id/endWordSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/endCharSwitch"
+
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="0dp" />
+
 </RelativeLayout>

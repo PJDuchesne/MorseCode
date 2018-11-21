@@ -52,8 +52,28 @@ public class MorseBrain {
     private int OutputCharIdx;
     private int OutputMorseIdx;
 
-    // TODO: Add input variable to change standard
-    public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView, TextView inputOverallTextView, ProgressBar inputProgressBar, Driver inputDriver) {
+    private volatile boolean currentlyOutputting;
+
+    public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView,
+                      TextView inputOverallTextView, ProgressBar inputProgressBar,
+                      Driver inputDriver, boolean endOfCharTaskFlag, boolean endOfWordTaskFlag) {
+        InitializeBrain(context, inputMorseTextView, inputCharTextView, inputOverallTextView,
+                        inputProgressBar, inputDriver, endOfCharTaskFlag, endOfWordTaskFlag);
+    }
+
+    public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView,
+                      TextView inputOverallTextView, ProgressBar inputProgressBar,
+                      Driver inputDriver) {
+
+        InitializeBrain(context, inputMorseTextView, inputCharTextView, inputOverallTextView,
+                        inputProgressBar, inputDriver, false, false);
+    }
+
+    private void InitializeBrain(Context context, TextView inputMorseTextView,
+                                 TextView inputCharTextView, TextView inputOverallTextView,
+                                 ProgressBar inputProgressBar, Driver inputDriver,
+                                 boolean endOfCharTaskFlag, boolean endOfWordTaskFlag) {
+
         InternationalStandardTrie = new MorseTrie(MorseCodeStandards.InternationalStandard);
         morseTextView = inputMorseTextView;
         charTextView = inputCharTextView;
@@ -62,11 +82,16 @@ public class MorseBrain {
         morseTimer = new Timer();
         uiHandler = new Handler();
         currentToast = null;
+        currentlyOutputting = false;
 
         parentContext = context;
 
-        EndOfWordTaskOn = true;
-        EndOfCharTaskOn = false;
+        EndOfCharTaskOn = endOfCharTaskFlag;
+        EndOfWordTaskOn = endOfWordTaskFlag;
+
+        // TODO: Write a fresh button that checks for updates in the above 2 flags and this time
+        // that is called from outside the brain
+        timeUnit = 100; // TODO: Get from settings (PARIS standard is 50 ms)
 
         feedbackDriver = inputDriver;
 
@@ -95,24 +120,7 @@ public class MorseBrain {
         public void run() {
             Log.e("[interCharTask]", "STARTING!");
 
-            uiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    morseTextView.setText("");
-                    charTextView.setText("");
-
-                    lastChar = InternationalStandardTrie.GetCurrentBranch().BranchChar;
-
-                    if (lastChar != null && !lastChar.equals("?") && overallTextView != null) overallTextView.append(lastChar);
-
-                    InternationalStandardTrie.ResetTrie();
-                }
-            });
-
-            if (EndOfWordTaskOn & lastChar != null && !lastChar.equals("?")) {
-                wordTask = new interWordTask();
-                morseTimer.schedule(wordTask, 4*timeUnit);
-            }
+            EndChar();
         }
     }
 
@@ -131,13 +139,36 @@ public class MorseBrain {
         }
     }
 
-    private void CancelTimerTasks() {
+    private void CancelInputTimerTasks() {
         //if (symbolTask != null) symbolTask.cancel(); // Currently not used
         if (charTask != null) charTask.cancel();
         if (wordTask != null) wordTask.cancel();
     }
 
-    // PUBLIC API BELOW
+    private void EndChar() {
+        uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                morseTextView.setText("");
+                charTextView.setText("");
+
+                lastChar = InternationalStandardTrie.GetCurrentBranch().BranchChar;
+
+                if (lastChar != null && !lastChar.equals("?") && overallTextView != null) overallTextView.append(lastChar);
+
+                InternationalStandardTrie.ResetTrie();
+            }
+        });
+
+        if (EndOfWordTaskOn & lastChar != null && !lastChar.equals("?")) {
+            wordTask = new interWordTask();
+            morseTimer.schedule(wordTask, 7*timeUnit);
+        }
+    }
+
+    //
+    // PUBLIC API BELOW (For Input)
+    //
 
     public void StartInput() {
         // Start any feedback
@@ -147,7 +178,7 @@ public class MorseBrain {
         if (currentToast != null) currentToast.cancel();
 
         // Cancel currently scheduled task (if any)
-        CancelTimerTasks();
+        CancelInputTimerTasks();
 
         // Start progress animation
         StartProgressBar();
@@ -204,11 +235,16 @@ public class MorseBrain {
 
     // Reset the brain (Via electric shock therapy)
     public void ElectricShock() {
+        if (overallTextView != null) overallTextView.setText(" ");
+        if (currentToast != null) currentToast.cancel(); // TODO: What is this doing?
+        ResetCurrentChar();
+    }
+
+    public void ResetCurrentChar() {
+        CancelInputTimerTasks();
         InternationalStandardTrie.ResetTrie();
-        morseTextView.setText("");
-        charTextView.setText("");
-        if (overallTextView != null) overallTextView.setText("");
-        if (currentToast != null) currentToast.cancel();
+        morseTextView.setText(" ");
+        charTextView.setText(" ");
         ResetProgressBar();
     }
 
@@ -243,6 +279,14 @@ public class MorseBrain {
         Log.e("[TestBrain]: ", "Ending Test!");
     }
 
+    public void SignalCharEnd() {
+        // Cancel tasks
+        CancelInputTimerTasks();
+
+        // Perform signalling
+        EndChar();
+    }
+
     public void StartProgressBar() {
         progressAnimation = ObjectAnimator.ofInt(progressBar, "Progress", 100);
         progressAnimation.setDuration(5*timeUnit);
@@ -255,19 +299,29 @@ public class MorseBrain {
         progressBar.setProgress(0);
     }
 
-    // API for Output
+    //
+    // Code for outputting morse code from text from here to the end
+    //
 
     public void OutputMorse(String MorseCodeToOutput) {
+        if (currentlyOutputting) {
+            Log.d("MorseBrain::OutputMorse", "Already outputting!");
+
+            EndOutput();
+        }
+
+        currentlyOutputting = true;
+
         // Check that the string is proper characters
-        if (!MorseCodeToOutput.matches("[a-zA-Z ]+")) {
-            Log.d("MorseBrain", "Invalid Character found in OutputMorse");
+        if (!MorseCodeToOutput.matches("[a-zA-Z0-9 ]+")) {
+            Log.d("MorseBrain::OutputMorse", "Invalid Input: Invalid characters!");
+            return;
         }
 
         if(MorseCodeToOutput.length() == 0) {
-            Log.d("MorseBrain", "Empty OutputMorse input");
+            Log.d("MorseBrain::OutputMorse", "Invalid Input: Empty input!");
+            return;
         }
-
-        // TODO: Need to check for an input of all spaces
 
         // Set up tail chaining values
         TokenizedOutput = MorseCodeToOutput.split("\\s+");
@@ -276,6 +330,10 @@ public class MorseBrain {
         OutputWordIdx = 0;
         OutputCharIdx = 0;
         OutputMorseIdx = 0;
+
+        if (TokenizedOutput.length == 0) {
+            Log.d("MorseBrain::OutputMorse", "Invalid Input: Only space(s)!");
+        }
 
         overallTextView.setText(TokenizedOutput[OutputWordIdx]);
         charTextView.setText(firstCharString);
@@ -286,15 +344,13 @@ public class MorseBrain {
     }
 
     private void TailChain() {
-        // Maybe check a global boolean flag here to end this process
-
         // Check for end of character and iterate to next character index if necessary
         if (OutputMorseIdx >= CurrentMorseOutput.length()) {
             OutputCharIdx++;
             OutputMorseIdx = 0; // Reset morse index
 
             // Temporarily blank morse text view as the character switches
-            morseTextView.setText(""); // Char Text view stays the same to give the user continuity
+            morseTextView.setText(" "); // Char Text view stays the same to give the user continuity
 
             // Check for end of word and iterate to next word index if necessary
             if (OutputCharIdx >= TokenizedOutput[OutputWordIdx].length()) {
@@ -360,9 +416,11 @@ public class MorseBrain {
 
         feedbackDriver.off();
 
-        morseTextView.setText("");
-        charTextView.setText("");
-        overallTextView.setText("");
+        morseTextView.setText(" ");
+        charTextView.setText(" ");
+        overallTextView.setText(" ");
+
+        currentlyOutputting = false;
     }
 
 }

@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
     @Override
@@ -62,6 +63,7 @@ public class SettingsActivity extends AppCompatActivity {
                 else{
                     s.setLightEnabled(false);
                 }
+
                 Log.v("lightEnabled=",""+s.lightEnabled);
 
             }
