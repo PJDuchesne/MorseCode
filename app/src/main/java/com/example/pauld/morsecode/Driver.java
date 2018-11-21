@@ -22,7 +22,7 @@ public class Driver {
     public Driver(Vibrator vibratorService, CameraManager systemService, Context applicationContext) {
         desiredSettings = SettingsSingleton.getInstance();
         vibrateHandler = vibratorService;
-        generateSound(540, 10);
+        generateSound(desiredSettings.frequency, 1);
         soundHandler = new AudioTrack(AudioManager.STREAM_MUSIC,
                 44100,
                 AudioFormat.CHANNEL_OUT_DEFAULT,
@@ -42,7 +42,7 @@ public class Driver {
     }
 
     public void on(){
-        if(desiredSettings.getHapticEnabled()){
+        if(SettingsSingleton.getInstance().getHapticEnabled()){
             vibrateHandler.vibrate(999999999 );
         }
         /*
@@ -53,13 +53,12 @@ public class Driver {
             e.printStackTrace();
         }
         */
-        if(soundHandler.getPlayState() != AudioTrack.PLAYSTATE_PLAYING && desiredSettings.getSoundEnabled()){
+        if(soundHandler.getPlayState() != AudioTrack.PLAYSTATE_PLAYING && SettingsSingleton.getInstance().getSoundEnabled()){
             soundHandler.play();
         }
 
-        if( lightHandler != null){
+        if( lightHandler != null && SettingsSingleton.getInstance().getLightEnabled()){
             try{
-                //0 Corresponds to the back camera
                 String cameraId = lightHandler.getCameraIdList()[0];
                 lightHandler.setTorchMode(cameraId, true);
             } catch (Exception e){
@@ -79,12 +78,12 @@ public class Driver {
            soundHandler.pause();
            soundHandler.flush();
            soundHandler.stop();
+           generateSound(SettingsSingleton.getInstance().frequency, 1);
            soundHandler.write(soundData, 0, soundData.length);
         }
 
         if( lightHandler != null){
             try{
-                //0 Corresponds to the back camera
                 String cameraId = lightHandler.getCameraIdList()[0];
                 lightHandler.setTorchMode(cameraId, false);
             } catch (Exception e){
