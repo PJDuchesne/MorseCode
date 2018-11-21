@@ -9,6 +9,10 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="login">LogIn</string>
+    <string name="textToMorse">Text To Morse</string>
+    <string name="morseToText">Morse To Text</string>
+    <string name="settings">Settings</string>
     <string name="TrainingScreenNav">Training Screen</string>
     <string name="LoginScreenNav">Login Screen</string>
     <string name="InputOutputNav">Input/Output</string>

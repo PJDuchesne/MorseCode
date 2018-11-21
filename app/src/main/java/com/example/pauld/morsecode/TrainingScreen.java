@@ -1,8 +1,11 @@
 package com.example.pauld.morsecode;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -29,6 +32,7 @@ public class TrainingScreen extends AppCompatActivity{
     private final double screenReferenceWidth = 1080;
     private MorseBrain brain;
     private ProgressBar progressBar;
+    private Driver feedbackDriver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,10 @@ public class TrainingScreen extends AppCompatActivity{
 
         formatSizes();
 
-        brain = new MorseBrain(this, currentInputLetterMorse, currentInputLetter, tempTextView, progressBar);
+        feedbackDriver = new Driver( (Vibrator) this.getSystemService(VIBRATOR_SERVICE),
+                  (CameraManager) getSystemService(Context.CAMERA_SERVICE),getApplicationContext());
+        brain = new MorseBrain(this, currentInputLetterMorse, currentInputLetter, tempTextView, progressBar, feedbackDriver);
+
         brain.ElectricShock();
 
         Intent intent = getIntent();

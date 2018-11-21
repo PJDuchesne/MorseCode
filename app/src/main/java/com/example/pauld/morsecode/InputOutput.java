@@ -38,7 +38,6 @@ public class InputOutput extends AppCompatActivity {
         setContentView(R.layout.activity_input_output);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         d = new Driver( (Vibrator) this.getSystemService(VIBRATOR_SERVICE),(CameraManager) getSystemService(Context.CAMERA_SERVICE),getApplicationContext());
 
         findViewById(R.id.ioBtn).setOnClickListener(new View.OnClickListener() {
