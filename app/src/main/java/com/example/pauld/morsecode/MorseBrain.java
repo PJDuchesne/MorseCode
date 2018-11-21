@@ -235,11 +235,16 @@ public class MorseBrain {
 
     // Reset the brain (Via electric shock therapy)
     public void ElectricShock() {
+        if (overallTextView != null) overallTextView.setText(" ");
+        if (currentToast != null) currentToast.cancel(); // TODO: What is this doing?
+        ResetCurrentChar();
+    }
+
+    public void ResetCurrentChar() {
+        CancelInputTimerTasks();
         InternationalStandardTrie.ResetTrie();
         morseTextView.setText(" ");
         charTextView.setText(" ");
-        if (overallTextView != null) overallTextView.setText(" ");
-        if (currentToast != null) currentToast.cancel();
         ResetProgressBar();
     }
 

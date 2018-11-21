@@ -93,7 +93,8 @@ public class BrainTestingActivity extends AppCompatActivity {
         resetView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                brain.ElectricShock();
+//                brain.ElectricShock();
+                brain.ResetCurrentChar();
             }
         });
 
@@ -164,6 +165,4 @@ public class BrainTestingActivity extends AppCompatActivity {
         brain.EndOutput();
         super.onDestroy();
     }
-
-
 }
