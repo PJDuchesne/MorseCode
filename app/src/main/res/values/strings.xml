@@ -21,6 +21,7 @@
     <string name="ChatScreenNav">Chat Screen</string>
     <string name="LessonLandingTitle">Lesson List</string>
     <string name="lessons">Lessons</string>
+    <string name="MorseHelp">?</string>
 
     <string name="CommonAlphabetLesson">E T A I N O S E S N T O I A T A E N I S A O E T S</string>
     <string name="FullAlphabetLesson">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</string>

@@ -62,8 +62,8 @@
 
         <activity android:name=".Lessons" />
         <activity android:name=".textToMorseActivity" />
-        <activity android:name=".MorseDictionaryActivity"></activity>
-        <activity android:name=".FreestyleInput"></activity>
+        <activity android:name=".MorseDictionaryActivity"/>
+        <activity android:name=".FreestyleInput"/>
     </application>
 
 </manifest>

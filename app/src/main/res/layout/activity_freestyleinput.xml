@@ -39,6 +39,17 @@
         android:layout_below="@id/freestyle_current_total_input"
         android:background="@drawable/training_screen_circular_reset_button"/>
 
+    <Button
+        android:id="@+id/morse_help"
+        android:layout_height="@dimen/TrainingResetButtonDiameter"
+        android:layout_width="@dimen/TrainingResetButtonDiameter"
+        android:layout_margin="@dimen/TrainingResetButtonMargins"
+        android:layout_centerInParent="true"
+        android:text="@string/MorseHelp"
+        android:textSize="@dimen/MorseHelpTextSize"
+        android:layout_below="@id/freestyle_current_total_input"
+        android:background="@drawable/circular_help_button"/>
+
     <RelativeLayout
         android:id="@+id/freestyle_screen_button_view"
         android:layout_below="@+id/freestyle_reset_input_btn"

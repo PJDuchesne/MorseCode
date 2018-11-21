@@ -31,9 +31,12 @@ public class MorseDictionaryActivity extends AppCompatActivity {
         int indexMorseCode;
         for (char index = 'A'; index <= 'Z';index++){
             indexMorseCode = MorseCodeStandards.GetRowNotSpecial(index);
+            letterToMorseContent.add(index + " " + MorseCodeStandards.InternationalStandard[indexMorseCode][1]);
+        }
+        for(char index = '0'; index <= '9'; index++){
+            indexMorseCode = MorseCodeStandards.GetRowNotSpecial(index);
             letterToMorseContent.add(index +" "+ MorseCodeStandards.InternationalStandard[indexMorseCode][1]);
         }
-
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_list_item_1, letterToMorseContent) {

@@ -1,6 +1,7 @@
 package com.example.pauld.morsecode;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -15,7 +16,7 @@ import android.widget.ProgressBar;
 public class FreestyleInput extends AppCompatActivity {
 
     private TextView totalInput, predictedInput, predictedMorse;
-    private Button resetButton, addLetterButton, resetCurrentInput;
+    private Button resetButton, addLetterButton, resetCurrentInput, morseDictionary;
     private ProgressBar progressbar;
     private View inputButton;
     private double screenHeight, screenWidth;
@@ -44,6 +45,7 @@ public class FreestyleInput extends AppCompatActivity {
         addLetterButton = findViewById(R.id.freestyle_add_letter_btn);
         resetCurrentInput = findViewById(R.id.freestyle_reset_input_btn);
         progressbar = findViewById(R.id.freestyle_progress_bar);
+        morseDictionary = findViewById(R.id.morse_help);
 
         formatSizes();
 
@@ -84,6 +86,14 @@ public class FreestyleInput extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 brain.ElectricShock();
+            }
+        });
+
+        morseDictionary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(), MorseDictionaryActivity.class);
+                startActivity(intent);
             }
         });
     }
