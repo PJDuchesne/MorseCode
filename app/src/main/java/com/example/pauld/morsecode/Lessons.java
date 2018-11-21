@@ -23,20 +23,25 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class Lessons extends AppCompatActivity {
-    private FirebaseDatabase firebaseDBInstance;
-    private DatabaseReference firebaseReferenceLessons;
     private final int NUMBER_OF_LESSONS = 10;
     private ArrayList<String> lessonsList;
     private String[] lessonStrings;
+    private boolean[] lessonsCompletedByUser;
     private ListView lessonListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lessons);
+    }
 
-        firebaseDBInstance = FirebaseDatabase.getInstance();
-        firebaseReferenceLessons = firebaseDBInstance.getReference("lessons");
+    @Override
+    protected void onResume(){
+        super.onResume();
+        updateUI();
+    }
+
+    private void updateUI(){
         initiateLessonArray();
         lessonsList = new ArrayList<String>();
         lessonListView = findViewById(R.id.lessonListView);
@@ -46,23 +51,34 @@ public class Lessons extends AppCompatActivity {
             lessonsList.add(lessonName);
         }
 
-        // This arrayadapter is used to populate the list's display
-        ArrayAdapter<String> listPopulator = new ArrayAdapter<String>(getApplicationContext(),
-                android.R.layout.simple_list_item_1, lessonsList) {
+        UserInfo user = new UserInfo();
+
+        user.getCompletedLessons(new UserInfoListener() {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView t = (TextView) view.findViewById(android.R.id.text1);
-                t.setTextColor(Color.BLACK);
-                if(position % 2 == 0) {
-                    t.setBackgroundColor(Color.GREEN);
-                    t.setText(t.getText() + "\t\t\t\tCompleted");
-                }
-                return view;
+            public void onArrayFetched(boolean[] lessonsCompleted) {
+                lessonsCompletedByUser = lessonsCompleted;
+                // This arrayadapter is used to populate the list's display
+                ArrayAdapter<String> listPopulator = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_list_item_1, lessonsList) {
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        View view = super.getView(position, convertView, parent);
+                        TextView t = (TextView) view.findViewById(android.R.id.text1);
+                        t.setTextColor(Color.BLACK);
+                        if(lessonsCompletedByUser[position]) {
+                            t.setBackgroundColor(Color.GREEN);
+                            t.setText(t.getText() + "\t\t\t\tCompleted");
+                        }else{
+                            t.setBackgroundColor(16514043);
+                        }
+
+                        return view;
+                    }
+                };
+                // Set the list to display the adapter.
+                lessonListView.setAdapter(listPopulator);
             }
-        };
-        // Set the list to display the adapter.
-        lessonListView.setAdapter(listPopulator);
+        });
 
         lessonListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,8 +92,7 @@ public class Lessons extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        }
+    }
 
     private void initiateLessonArray(){
         lessonStrings = new String[NUMBER_OF_LESSONS];

@@ -26,7 +26,9 @@ public class UserInfo {
     public void getCompletedLessons(final UserInfoListener callback) {
         lessonsCompleted = new boolean[10];
         if (user == null) {
-            callback.onArrayFetched(null);
+            for(int i = 0; i < 10; i++)
+                lessonsCompleted[i] = false;
+            callback.onArrayFetched(lessonsCompleted);
             return;
         }
         firebaseDBInstance.getReference("users").child(user.getUid()).child("lessonsCompleted").addListenerForSingleValueEvent(new ValueEventListener() {

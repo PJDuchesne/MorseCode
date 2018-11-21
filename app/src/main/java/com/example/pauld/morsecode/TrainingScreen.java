@@ -6,16 +6,13 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
 
 import java.util.StringTokenizer;
 
@@ -27,17 +24,22 @@ public class TrainingScreen extends AppCompatActivity{
     private Button morseResetButton;
     private boolean newWord, blockInput, completedLesson;
     private int wordCharIndex;
+    private double screenHeight, screenWidth;
+    private final double screenReferenceHeight = 2076;
+    private final double screenReferenceWidth = 1080;
     private MorseBrain brain;
     private ProgressBar progressBar;
-
-    private FirebaseDatabase firebaseDBInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training_screen);
 
-        firebaseDBInstance = FirebaseDatabase.getInstance();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        screenHeight = displayMetrics.heightPixels;
+        screenWidth = displayMetrics.widthPixels;
 
         // Link the TextViews/Buttons
         currentWord = findViewById(R.id.current_training_word);
@@ -51,6 +53,8 @@ public class TrainingScreen extends AppCompatActivity{
         blockInput = false;
         completedLesson = false;
         TextView tempTextView = findViewById(R.id.temptextview);
+
+        formatSizes();
 
         brain = new MorseBrain(this, currentInputLetterMorse, currentInputLetter, tempTextView, progressBar);
         brain.ElectricShock();
@@ -153,7 +157,9 @@ public class TrainingScreen extends AppCompatActivity{
         currentLetterMorse.setText("Complete!");
         currentWord.setText("");
 
-        firebaseDBInstance.getReference("users").child(user.getUid()).child("lessonsCompleted").child().setValue(1);
+        // Set the lesson to completed
+        UserInfo user = new UserInfo();
+        user.setCompleted(Integer.valueOf(lessonID));
         resetButtonInput();
     }
 
@@ -163,6 +169,34 @@ public class TrainingScreen extends AppCompatActivity{
             return "ERROR";
         }
         return retString;
+    }
+
+    private void formatSizes(){
+        double heightScalar = screenHeight / screenReferenceHeight;
+        double widthScalar = screenWidth / screenReferenceWidth;
+
+        // adjust the sizes of buttons
+
+        double tempHeight = ((double)morseInputButton.getLayoutParams().height) * heightScalar;
+        double tempWidth = ((double)morseInputButton.getLayoutParams().width) * widthScalar;
+        if(tempHeight > tempWidth)
+            tempHeight = tempWidth;
+        else
+            tempWidth = tempHeight;
+
+        morseInputButton.getLayoutParams().height = (int)tempHeight;
+        morseInputButton.getLayoutParams().width = (int)tempWidth;
+
+        tempHeight = ((double)morseResetButton.getLayoutParams().height) * heightScalar;
+        tempWidth = ((double)morseResetButton.getLayoutParams().width) * widthScalar;
+
+        if(tempHeight > tempWidth)
+            tempHeight = tempWidth;
+        else
+            tempWidth = tempHeight;
+
+        morseResetButton.getLayoutParams().height = (int)tempHeight;
+        morseResetButton.getLayoutParams().width = (int)tempWidth;
     }
 
     @Override

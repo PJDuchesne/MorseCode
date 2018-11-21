@@ -3,20 +3,20 @@
     <dimen name="TrainingScreenNextWordTextSize">30sp</dimen>
     <dimen name="TrainingScreenNextWordMarginTop">15dp</dimen>
     <dimen name="TrainingScreenNextLetterMarginTop">5dp</dimen>
-    <dimen name="TrainingScreenNextLetterTextSize">60sp</dimen>
+    <dimen name="TrainingScreenNextLetterTextSize">50sp</dimen>
     <dimen name="TrainingButtonCircleDiameter">300dp</dimen>
     <dimen name="TrainingResetButtonDiameter">80dp</dimen>
-    <dimen name="TrainingButtonTextSize">50sp</dimen>
+    <dimen name="TrainingButtonTextSize">42sp</dimen>
     <dimen name="TrainingResetButtonMargins">20dp</dimen>
     <dimen name="TrainingResetButtonTextSize">20sp</dimen>
     <dimen name="TrainingMorseInputMarginBottom">35dp</dimen>
     <dimen name="TrainingMorseProgressBarWidth">200dp</dimen>
     <dimen name="TrainingMorseProgressBarHeight">20dp</dimen>
-    <dimen name="TrainingMorseProgressBarMarginBottom">30dp</dimen>
+    <dimen name="TrainingMorseProgressBarMarginBottom">20dp</dimen>
     <dimen name="TrainingMorseProgressBarMarginLeft">20dp</dimen>
-    <dimen name="LessonLandingTitleMarginTop">30dp</dimen>
+    <dimen name="LessonLandingTitleMarginTop">20dp</dimen>
     <dimen name="LessonLandingTitleTextSize">50sp</dimen>
-    <dimen name="LessonLandingListMarginTop">30dp</dimen>
+    <dimen name="LessonLandingListMarginTop">20dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
