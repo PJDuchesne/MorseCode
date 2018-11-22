@@ -1,100 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="100dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     android:layout_weight="2">
 
-    <LinearLayout
+    <View
+        android:id="@+id/myRectangleView"
+        android:layout_width="fill_parent"
+        android:layout_height="125dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/rect_divider" />
+
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="65dp"
+        android:layout_marginStart="5dp"
+        android:layout_weight="1"
+        android:gravity="bottom|start"
+        android:text="Settings"
+        android:textColor="@color/colorOrangeAccent"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Settings"
-            android:textSize="30sp" />
+    <Switch
+        android:id="@+id/haptic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="300dp"
+        android:layout_weight="2"
+        android:checked="true"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:text="Haptic"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
-        <Switch
-            android:id="@+id/haptic"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:checked="true"
-            android:text="Haptic" />
+    <Switch
+        android:id="@+id/sound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="180dp"
+        android:layout_weight="2"
+        android:checked="true"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:text="Sound"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
-        <Switch
-            android:id="@+id/sound"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:checked="true"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:text="Sound" />
-
-        <Switch
-            android:id="@+id/light"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:checked="true"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:text="Light" />
+    <Switch
+        android:id="@+id/light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="240dp"
+        android:layout_weight="2"
+        android:checked="true"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:text="Light"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Input Speed"
-            android:textStyle="bold"
-            android:textSize="20dp"/>
+    <TextView
+        android:id="@+id/inputSpeedText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="93dp"
+        android:layout_weight="1"
+        android:paddingStart="10dp"
+        android:paddingTop="20dp"
+        android:text="Input Speed"
+        android:textColor="@color/colorBlack"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:max="10"
-            android:progress="3" />
+    <SeekBar
+        android:id="@+id/seekBar"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/inputSpeedText"
+        android:layout_marginTop="-93dp"
+        android:layout_weight="1"
+        android:max="10"
+        android:progress="5" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Sound Frequency"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="214dp"
+        android:layout_weight="1"
+        android:paddingStart="10dp"
+        android:paddingTop="20dp"
+        android:text="Sound Frequency"
+        android:textColor="@color/colorBlack"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
-        <SeekBar
-            android:id="@+id/seekBar2"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:min="0"
-            android:progress="1"
-            android:max="12"/>
+    <SeekBar
+        android:id="@+id/seekBar2"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="-214dp"
+        android:layout_weight="1"
+        android:max="12"
+        android:min="0"
+        android:progress="6" />
 
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:text="Logout" />
 
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

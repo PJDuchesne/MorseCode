@@ -10,7 +10,7 @@
     <GridView
         android:id="@+id/letterToMorseList"
         android:layout_width="395dp"
-        android:layout_height="587dp"
+        android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:numColumns="2"

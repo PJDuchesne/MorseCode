@@ -5,5 +5,5 @@
     <stroke
         android:width="2dp"
         android:color="@color/colorPrimaryDark"/>
-    <solid android:color="@color/colorAddLetterButton"/>
+    <solid android:color="#10FF20"/>
 </shape>

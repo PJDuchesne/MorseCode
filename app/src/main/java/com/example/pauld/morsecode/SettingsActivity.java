@@ -10,18 +10,40 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
+    private SettingsSingleton s;
+    private SeekBar iSpeed,frequency;
+    private Switch light,haptic,sound;
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        iSpeed = findViewById(R.id.seekBar);
+        frequency = findViewById(R.id.seekBar2);
+        haptic = findViewById(R.id.haptic);
+        sound = findViewById(R.id.sound);
+        light = findViewById(R.id.light);
+
+        s = SettingsSingleton.getInstance();
+
+        frequency.setProgress(s.getFrequency()/40 - 10);
+        iSpeed.setProgress(s.getInputSpeed());
+        haptic.setChecked(s.getHapticEnabled());
+        sound.setChecked(s.getSoundEnabled());
+        light.setChecked(s.getLightEnabled());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        Switch haptic = findViewById(R.id.haptic);
-        Switch sound = findViewById(R.id.sound);
-        Switch light = findViewById(R.id.light);
-        SeekBar iSpeed = findViewById(R.id.seekBar);
-        final SeekBar frequency = findViewById(R.id.seekBar2);
-        Button bLogout = findViewById(R.id.btnLogout);
-        final SettingsSingleton s=SettingsSingleton.getInstance();
+        haptic = findViewById(R.id.haptic);
+        sound = findViewById(R.id.sound);
+        light = findViewById(R.id.light);
+        iSpeed = findViewById(R.id.seekBar);
+        frequency = findViewById(R.id.seekBar2);
+        s = SettingsSingleton.getInstance();
+
 
         haptic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
