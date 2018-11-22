@@ -41,14 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
         edit_email = findViewById(R.id.edit_email);
         edit_pass = findViewById(R.id.edit_pass);
         //edit_name = findViewById(R.id.edit_name);
-        btn_exit = findViewById(R.id.btn_exit);
 
-        btn_exit.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         btn_signUp.setOnClickListener(new View.OnClickListener() {
             @Override

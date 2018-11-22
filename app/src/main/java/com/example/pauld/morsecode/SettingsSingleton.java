@@ -7,8 +7,8 @@ public class SettingsSingleton {
     public boolean hapticEnabled=true;
     public boolean soundEnabled=true;
     public boolean lightEnabled=true;
-    public int inputSpeed=3;
-    public int frequency=440;
+    public int inputSpeed=5;
+    public int frequency=640;
 
 
     private SettingsSingleton() {

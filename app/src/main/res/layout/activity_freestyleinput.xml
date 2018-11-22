@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorTrainingBackground">
+    android:background="@color/colorLightGrey">
 
     <TextView
         android:id="@+id/freestyle_current_total_input"
@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/TrainingScreenNextWordMarginTop"
-        android:textColor="@color/colorTrainingNextWordText"
+        android:textColor="@color/colorOrangeAccent"
         android:textSize="@dimen/FreestyleCurrentInputSize"
         android:text="Default"
         />
