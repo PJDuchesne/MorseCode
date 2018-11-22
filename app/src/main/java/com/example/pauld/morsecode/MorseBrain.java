@@ -24,15 +24,13 @@ public class MorseBrain {
     private Handler uiHandler; // To allow the timer thread to change textViews
     private ObjectAnimator progressAnimation;
     private Toast currentToast;
+    private SettingsSingleton settings;
+    private String lastChar;
 
     // Settings
     private boolean EndOfWordTaskOn;
     private boolean EndOfCharTaskOn;
-
-    private String lastChar;
-
-    // Constants
-    private int timeUnit = 100; // In milliseconds, TODO: Pull from settings
+    private int timeUnit;
 
     // Input variables
     private MorseTrie InternationalStandardTrie;
@@ -83,6 +81,8 @@ public class MorseBrain {
         uiHandler = new Handler();
         currentToast = null;
         currentlyOutputting = false;
+        settings = SettingsSingleton.getInstance();
+        RefreshBrain();
 
         parentContext = context;
 
@@ -367,7 +367,13 @@ public class MorseBrain {
                 delayHandler2.postDelayed(new Runnable(){
                     @Override
                     public void run(){
-                        TailChain();
+                    String currentCharString = TokenizedOutput[OutputWordIdx].substring(OutputCharIdx, OutputCharIdx + 1);
+                    CurrentMorseOutput = GiveLetterGetMorse(currentCharString);
+
+                    charTextView.setText(currentCharString);
+                    morseTextView.setText(CurrentMorseOutput);
+
+                    TailChain();
                     }
                 }, 7*timeUnit); // Delay between words is 7 time units
                 return;
@@ -421,6 +427,13 @@ public class MorseBrain {
         overallTextView.setText(" ");
 
         currentlyOutputting = false;
+    }
+
+    public void RefreshBrain() {
+        // Update timing (In milliseconds)
+        timeUnit = 50 + 5*(settings.inputSpeed - 5); // TODO: Change this ot 50 and 5
+
+        // TODO: Update flags on interchar and interword tasks
     }
 
 }

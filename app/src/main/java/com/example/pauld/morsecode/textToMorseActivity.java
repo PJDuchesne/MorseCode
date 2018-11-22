@@ -18,7 +18,7 @@ public class textToMorseActivity extends AppCompatActivity {
     private TextView txt_currentWord,txt_currentMorse,txt_currentLetter;
     private EditText txt_inputText;
     private ProgressBar emptyBar;
-    private MorseBrain morseConverter;
+    private MorseBrain brain;
     private Driver outputDriver;
 
 
@@ -40,7 +40,7 @@ public class textToMorseActivity extends AppCompatActivity {
 
 
 //extView inputOverallTextView, ProgressBar inputProgressBar, Driver inputDriver
-        morseConverter = new MorseBrain(getApplicationContext(),txt_currentMorse,txt_currentLetter,
+        brain = new MorseBrain(getApplicationContext(),txt_currentMorse,txt_currentLetter,
                 txt_currentWord,emptyBar,outputDriver);
 
         txt_currentWord.setText("Word");
@@ -51,9 +51,33 @@ public class textToMorseActivity extends AppCompatActivity {
         btn_generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                morseConverter.OutputMorse(txt_inputText.getText().toString().toUpperCase());
+                brain.OutputMorse(txt_inputText.getText().toString().toUpperCase());
             }
         });
 
+    }
+
+    @Override
+    protected void onResume(){
+        brain.RefreshBrain();
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop(){
+        brain.EndOutput();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy(){
+        brain.EndOutput();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause(){
+        brain.EndOutput();
+        super.onPause();
     }
 }

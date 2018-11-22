@@ -125,4 +125,28 @@ public class FreestyleInput extends AppCompatActivity {
         resetButton.getLayoutParams().height = (int)tempHeight;
         resetButton.getLayoutParams().width = (int)tempWidth;
     }
+
+    @Override
+    protected void onResume(){
+        brain.RefreshBrain();
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop(){
+        brain.EndOutput();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy(){
+        brain.EndOutput();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause(){
+        brain.EndOutput();
+        super.onPause();
+    }
 }

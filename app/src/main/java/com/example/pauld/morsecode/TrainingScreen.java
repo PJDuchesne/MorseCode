@@ -207,28 +207,31 @@ public class TrainingScreen extends AppCompatActivity{
     }
 
     @Override
+    protected void onStart(){
+        super.onStart();
+    }
+
+    @Override
     protected void onStop(){
+        brain.EndOutput();
         super.onStop();
     }
 
     @Override
-    protected void onStart(){
-        super.onStart();
-
-    }
-
-    @Override
     protected void onDestroy(){
+        brain.EndOutput();
         super.onDestroy();
     }
 
     @Override
     protected void onPause(){
+        brain.EndOutput();
         super.onPause();
     }
 
     @Override
     protected void onResume(){
+        brain.RefreshBrain();
         super.onResume();
     }
 
