@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/TrainingScreenNextWordMarginTop"
-        android:text="DEFAULT TEXT"
+        android:text="@string/defaultText"
         android:textColor="@color/colorTrainingNextWordText"
         android:textSize="@dimen/TrainingScreenNextWordTextSize"
         />
@@ -25,7 +25,7 @@
         android:layout_below="@+id/current_training_word"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/TrainingScreenNextLetterMarginTop"
-        android:text="L"
+        android:text="@string/defaultChar1"
         android:textColor="@color/colorTrainingNextWordText"
         android:textSize="@dimen/TrainingScreenNextLetterTextSize"
         />
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/current_training_letter"
         android:layout_centerInParent="true"
-        android:text="• − • •"
+        android:text="@string/defaultMorse1"
         android:textColor="@color/colorTrainingNextWordText"
         android:textSize="@dimen/TrainingScreenNextLetterTextSize"
         />
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/TrainingButtonTextSize"
-            android:text="A"/>
+            android:text="@string/defaultChar2"/>
 
         <TextView
             android:id="@+id/current_morse_input"
@@ -73,7 +73,7 @@
             android:layout_marginTop="@dimen/TrainingMorseInputMarginBottom"
             android:textStyle="bold"
             android:textSize="@dimen/TrainingButtonTextSize"
-            android:text="-.-.-"/>
+            android:text="@string/defaultMorse2"/>
 
     </RelativeLayout>
 

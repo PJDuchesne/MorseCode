@@ -7,13 +7,13 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Vibrator;
+// TODO @George: Formalize these references
 //https://progur.com/2016/12/how-to-create-8-bit-music-on-android.html
 //https://www.soundjay.com/beep-sounds-1.html
 //https://stackoverflow.com/questions/27420594/android-5-camera2-use-only-flash
 public class Driver {
 
     private Vibrator vibrateHandler;
-    //private MediaPlayer soundHandler;
     private AudioTrack soundHandler;
     private CameraManager lightHandler;
     private byte soundData[];
@@ -36,23 +36,12 @@ public class Driver {
         else{
             lightHandler = null;
         }
-        //Uri sound = Uri.parse("android.resource://" + packageName + "/" + R.raw.beep);
-        //soundHandler = MediaPlayer.create(applicationContext,sound);
-        //soundHandler.setLooping(false);
     }
 
     public void on(){
         if(SettingsSingleton.getInstance().getHapticEnabled()){
             vibrateHandler.vibrate(999999999 );
         }
-        /*
-        try {
-            soundHandler.seekTo(0);
-            soundHandler.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
         if(soundHandler.getPlayState() != AudioTrack.PLAYSTATE_PLAYING && SettingsSingleton.getInstance().getSoundEnabled()){
             soundHandler.play();
         }
@@ -69,11 +58,6 @@ public class Driver {
 
     public void off(){
         vibrateHandler.cancel();
-        /*
-        if(soundHandler.isPlaying()){
-            soundHandler.pause();
-        }
-       */
         if(soundHandler.getPlayState() == AudioTrack.PLAYSTATE_PLAYING){
            soundHandler.pause();
            soundHandler.flush();
@@ -102,27 +86,4 @@ public class Driver {
             soundData[i] = sample;
         }
     }
-
-
 }
-
-
-/*
-                for(int i = 0;i<5;i++){
-                    try {
-                        d.on();
-                        Log.d("SOUND","ON"+i);
-                        Thread.sleep(100);
-                        d.off();
-                        Log.d("SOUND","OFF"+i);
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-*/
-
-
-
-
-

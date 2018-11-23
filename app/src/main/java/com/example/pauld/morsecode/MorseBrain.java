@@ -18,7 +18,6 @@ public class MorseBrain {
     // Local variables
     private Timer morseTimer;
     private long startInputTime;
-    private interSymbolTask symbolTask;
     private interCharTask charTask;
     private interWordTask wordTask;
     private Handler uiHandler; // To allow the timer thread to change textViews
@@ -72,7 +71,8 @@ public class MorseBrain {
                                  ProgressBar inputProgressBar, Driver inputDriver,
                                  boolean endOfCharTaskFlag, boolean endOfWordTaskFlag) {
 
-        InternationalStandardTrie = new MorseTrie(MorseCodeStandards.InternationalStandard);
+//        InternationalStandardTrie = new MorseTrie(MorseCodeStandards.InternationalStandard);
+        InternationalStandardTrie = new MorseTrie();
         morseTextView = inputMorseTextView;
         charTextView = inputCharTextView;
         overallTextView = inputOverallTextView;
@@ -96,18 +96,6 @@ public class MorseBrain {
         feedbackDriver = inputDriver;
 
         ElectricShock();
-    }
-
-    // When triggered: Current symbol is over?
-    // Should: ?? Anything ??
-    private class interSymbolTask extends TimerTask {
-        @Override
-        public void run() {
-            // TODO: Determine if this is necessary, reattach if so
-
-            // Schedule "Space between characters" task
-            morseTimer.schedule(new interCharTask(), 2*timeUnit);
-        }
     }
 
     // When triggered: Current character is finished and should be displayed
@@ -140,7 +128,6 @@ public class MorseBrain {
     }
 
     private void CancelInputTimerTasks() {
-        //if (symbolTask != null) symbolTask.cancel(); // Currently not used
         if (charTask != null) charTask.cancel();
         if (wordTask != null) wordTask.cancel();
     }
@@ -431,9 +418,7 @@ public class MorseBrain {
 
     public void RefreshBrain() {
         // Update timing (In milliseconds)
-        timeUnit = 50 + 5*(settings.inputSpeed - 5); // TODO: Change this ot 50 and 5
-
-        // TODO: Update flags on interchar and interword tasks
+        timeUnit = 100 + 10*(settings.inputSpeed - 5);
     }
 
 }

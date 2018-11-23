@@ -5,7 +5,7 @@ public class MorseTrie {
     private MorseTrieBranch CurrentBranch;
     private MorseTrieBranch TailBranch;
 
-    public MorseTrie(String MorseCodeStandard[][]) {
+    public MorseTrie() {
         // Iteratively creates everything. Turtles all the way down.
         TailBranch = new MorseTrieBranch();
         StartBranch = new MorseTrieBranch(MorseCodeStandards.InternationalStandard[0], TailBranch);

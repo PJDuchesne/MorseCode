@@ -77,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-
                 // https://firebase.google.com/docs/auth/android/password-auth
                 userAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

@@ -38,8 +38,6 @@ public class textToMorseActivity extends AppCompatActivity {
                                     (CameraManager) getSystemService(Context.CAMERA_SERVICE),
                                     getApplicationContext());
 
-
-//extView inputOverallTextView, ProgressBar inputProgressBar, Driver inputDriver
         brain = new MorseBrain(getApplicationContext(),txt_currentMorse,txt_currentLetter,
                 txt_currentWord,emptyBar,outputDriver);
 
@@ -47,14 +45,12 @@ public class textToMorseActivity extends AppCompatActivity {
         txt_currentLetter.setText("W");
         txt_currentMorse.setText("•--");
 
-
         btn_generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 brain.OutputMorse(txt_inputText.getText().toString().toUpperCase());
             }
         });
-
     }
 
     @Override

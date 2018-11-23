@@ -22,7 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="45dp"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="@color/colorOrangeAccent"
         android:textSize="40sp"
         android:textStyle="bold" />
@@ -37,7 +37,7 @@
         android:layout_marginTop="210dp"
         android:ems="10"
         android:textSize="25sp"
-        android:hint="Email"
+        android:hint="@string/emailTextView"
         android:inputType="textEmailAddress" />
 
 
@@ -48,7 +48,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="280dp"
-        android:hint="Password"
+        android:hint="@string/passwordTextView"
         android:inputType="textPassword"
         android:ems="10"
         android:textSize="25sp"
@@ -62,7 +62,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="230dp"
         android:background="@drawable/oval_button"
-        android:text="Log In"
+        android:text="@string/login"
         android:textAllCaps="false"
         android:textSize="25sp" />
 
@@ -76,6 +76,6 @@
         android:textAllCaps="false"
         android:background="@drawable/oval_button"
         android:textSize="25sp"
-        android:text="Register" />
+        android:text="@string/registerBtn" />
 
 </RelativeLayout>

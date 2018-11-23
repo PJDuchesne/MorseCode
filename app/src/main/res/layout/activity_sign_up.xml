@@ -22,7 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="45dp"
-        android:text="Register"
+        android:text="@string/registerBtn"
         android:textColor="@color/colorOrangeAccent"
         android:textSize="40sp"
         android:textStyle="bold" />
@@ -34,7 +34,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="210dp"
-        android:hint="Email"
+        android:hint="@string/emailTextView"
         android:ems="10"
         android:textSize="25sp"
         android:inputType="textEmailAddress" />
@@ -47,11 +47,10 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="280dp"
-        android:hint="Password"
+        android:hint="@string/passwordTextView"
         android:inputType="textPassword"
         android:textSize="25sp"
-        android:ems="10"
-        />
+        android:ems="10" />
 
     <Button
         android:id="@+id/btn_signUp"
@@ -59,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Create Account"
+        android:text="@string/registerBtn"
         android:layout_marginBottom="230dp"
         android:background="@drawable/oval_button"
         android:textAllCaps="false"

@@ -1,7 +1,5 @@
 package com.example.pauld.morsecode;
 
-import android.util.Log;
-
 public class MorseTrieBranch {
     public String BranchChar;
     public String BranchMorseCode;

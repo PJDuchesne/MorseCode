@@ -13,7 +13,7 @@ public class MorseCodeStandards {
     public final static String InternationalStandard[][] = {
             {"",  "",      "E", "T"}, // Empty is actually a space
             {"A", "•-",    "R", "W"}, // 1st entry for start of letters
-            {"B", "-•••",  "6", "?"},
+            {"B", "-•••",   "6", "?"},
             {"C", "-•-•",  "?", "?"},
             {"D", "-••",   "B", "X"},
             {"E", "•",     "I", "A"},

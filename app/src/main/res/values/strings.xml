@@ -37,4 +37,21 @@
     <string name="defaultTtoMWord">Word</string>
     <string name="defaultTtoMLetter">W</string>
     <string name="defaultTtoMMorseCode">•--</string>
+
+    <string name="emailTextView">Email</string>
+    <string name="passwordTextView">Password</string>
+    <string name="registerBtn">Register</string>
+
+    <string name="hapticSetting">Haptic</string>
+    <string name="soundSetting">Sound</string>
+    <string name="lightSetting">Light</string>
+    <string name="soundFreqSetting">Sound Frequency</string>
+    <string name="speedSetting">Input / Output Setting</string>
+
+    <string name="defaultText">Default Text</string>
+    <string name="defaultChar1">L</string>
+    <string name="defaultChar2">A</string>
+    <string name="defaultMorse1">• − • •"</string>
+    <string name="defaultMorse2">- • − • -"</string>
+
 </resources>

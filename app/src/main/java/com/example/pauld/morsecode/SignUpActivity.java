@@ -20,9 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private Button btn_signUp,btn_exit;
-    private EditText edit_email ,edit_pass ,edit_name;
-    private String password,email;//,name;
+    private Button btn_signUp;
+    private EditText edit_email ,edit_pass;
+    private String password,email;
     private FirebaseAuth userAuth;
     private FirebaseDatabase firebaseDBInstance;
 
@@ -40,26 +40,17 @@ public class SignUpActivity extends AppCompatActivity {
         btn_signUp = findViewById(R.id.btn_signUp);
         edit_email = findViewById(R.id.edit_email);
         edit_pass = findViewById(R.id.edit_pass);
-        //edit_name = findViewById(R.id.edit_name);
-
 
         btn_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 email = edit_email.getText().toString();
-                //name = edit_name.getText().toString();
                 password = edit_pass.getText().toString();
                 if(email.isEmpty() || password.isEmpty() ){
                     if(email.isEmpty()){
                         edit_email.setHint("Enter a valid email");
                         edit_email.setHintTextColor(getColor(R.color.colorAccent));
                     }
-                    /*
-                    if(name.isEmpty()){
-                        edit_name.setHint("Enter a name");
-                        edit_name.setHintTextColor(getColor(R.color.colorAccent));
-                    }
-                    */
                     if(password.isEmpty()){
                         Toast.makeText(getApplicationContext(),"Password field shoudn't be empty",Toast.LENGTH_SHORT).show();
                     }
@@ -83,10 +74,8 @@ public class SignUpActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
-                                    //Log.d("SINGLETAG", "createUserWithEmail:success");
                                     FirebaseUser user = userAuth.getCurrentUser();
                                     DatabaseReference userData = firebaseDBInstance.getReference("users").child(user.getUid());
-                                    //userData.child("name").setValue(name);
                                     userData.child("ID").setValue(user.getUid());
                                     userData.child("lessonsCompleted").child("0").setValue(0);
                                     userData.child("lessonsCompleted").child("1").setValue(0);
@@ -108,8 +97,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                             }
                         });
-
-
             }
         });
     }

@@ -3,11 +3,9 @@ package com.example.pauld.morsecode;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
-import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
     private SettingsSingleton s;
@@ -48,7 +46,6 @@ public class SettingsActivity extends AppCompatActivity {
         haptic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                Log.v("Switch State=",""+b);
                 if(b==true){
                     s.setHapticEnabled(true);
                 }
@@ -63,7 +60,6 @@ public class SettingsActivity extends AppCompatActivity {
         sound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                Log.v("Switch State=",""+b);
                 if(b==true){
                     s.setSoundEnabled(true);
                 }
@@ -78,7 +74,6 @@ public class SettingsActivity extends AppCompatActivity {
         light.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                Log.v("Switch State=",""+b);
                 if(b==true){
                     s.setLightEnabled(true);
                 }
@@ -94,7 +89,6 @@ public class SettingsActivity extends AppCompatActivity {
         iSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-//                Log.v("seek bar value=",""+i);
                 s.setInputSpeed(i);
                 Log.v("input speed=",""+s.inputSpeed);
 
@@ -115,7 +109,6 @@ public class SettingsActivity extends AppCompatActivity {
         frequency.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                Log.v("seek bar value=",""+i);
                 if (i > 0 && i <= 12) {
                     s.setFrequency(440+((i-1)*40));
                 }
@@ -123,8 +116,6 @@ public class SettingsActivity extends AppCompatActivity {
                 {
                     s.setFrequency(0);
                 }
-
-                Log.v("frequency=",""+s.frequency);
 
             }
 

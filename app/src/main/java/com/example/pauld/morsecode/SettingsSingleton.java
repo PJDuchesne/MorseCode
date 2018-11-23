@@ -1,7 +1,5 @@
 package com.example.pauld.morsecode;
 
-import java.io.Serializable;
-
 public class SettingsSingleton {
     private static volatile SettingsSingleton sInstance;
     public boolean hapticEnabled=true;

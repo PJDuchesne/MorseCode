@@ -38,7 +38,6 @@
             android:label="@string/LoginScreenNav"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".TrainingScreen" />
-        <activity android:name=".BrainTestingActivity" />
         <activity
             android:name=".training_screen_landing_page"
             android:label="@string/TrainingScreenNav"

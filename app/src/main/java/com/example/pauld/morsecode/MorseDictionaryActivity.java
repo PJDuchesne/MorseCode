@@ -54,6 +54,5 @@ public class MorseDictionaryActivity extends AppCompatActivity {
         };
 
         letterToMorseList.setAdapter(adapter);
-
     }
 }
