@@ -24,6 +24,8 @@ public class SettingsSingleton {
         return sInstance;
     }
 
+//    Functions to get/set input methods,sound frequency and input speed
+
     public void setHapticEnabled(boolean hapticEnabled){
         this.hapticEnabled=hapticEnabled;
     }

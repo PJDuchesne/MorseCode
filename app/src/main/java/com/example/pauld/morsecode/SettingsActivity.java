@@ -8,6 +8,7 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
+    // Local variables
     private SettingsSingleton s;
     private SeekBar iSpeed,frequency;
     private Switch light,haptic,sound;
@@ -15,8 +16,8 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        iSpeed = findViewById(R.id.seekBar);
-        frequency = findViewById(R.id.seekBar2);
+        iSpeed = findViewById(R.id.touchSpeed);
+        frequency = findViewById(R.id.frequencySeekBar);
         haptic = findViewById(R.id.haptic);
         sound = findViewById(R.id.sound);
         light = findViewById(R.id.light);
@@ -38,11 +39,12 @@ public class SettingsActivity extends AppCompatActivity {
         haptic = findViewById(R.id.haptic);
         sound = findViewById(R.id.sound);
         light = findViewById(R.id.light);
-        iSpeed = findViewById(R.id.seekBar);
-        frequency = findViewById(R.id.seekBar2);
+        iSpeed = findViewById(R.id.touchSpeed);
+        frequency = findViewById(R.id.frequencySeekBar);
         s = SettingsSingleton.getInstance();
 
-
+        //check switch and seekbar states on settings activity
+        // and set global variables in settings singleton
         haptic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
