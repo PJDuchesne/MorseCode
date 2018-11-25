@@ -156,6 +156,10 @@ What to include in your project sources:
 - Android libraries
 - Everything listed on the Dalhousie Plagiarism and Cheating pages(https://www.dal.ca/dept/university_secretariat/academic-integrity/plagiarism-cheating.html)
 
+- The firebase documentation used can be found in the following page: https://firebase.google.com/docs/android/setup
+  - Note: while the link doesn't contain all the references used it does intuitively redirect to these pages.
+
+
 [1] "How to Create 8-bit Music on Android", progur.com, 11 December 2016. [Online]. Available: https://progur.com/2016/12/how-to-create-8-bit-music-on-android.html.
 
 [2] "Android Camera2 Library Documentation", developer.android.com, 6 June 2018. [Online]. Available: https://developer.android.com/reference/android/hardware/camera2/CameraManager
