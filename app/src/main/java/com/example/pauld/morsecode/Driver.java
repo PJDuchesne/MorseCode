@@ -22,7 +22,7 @@ public class Driver {
     public Driver(Vibrator vibratorService, CameraManager systemService, Context applicationContext) {
         desiredSettings = SettingsSingleton.getInstance();
         vibrateHandler = vibratorService;
-        generateSound(desiredSettings.frequency, 1);
+        generateSound(desiredSettings.getFrequency(), 1);
         soundHandler = new AudioTrack(AudioManager.STREAM_MUSIC,
                 44100,
                 AudioFormat.CHANNEL_OUT_DEFAULT,
@@ -62,7 +62,7 @@ public class Driver {
            soundHandler.pause();
            soundHandler.flush();
            soundHandler.stop();
-           generateSound(SettingsSingleton.getInstance().frequency, 1);
+           generateSound(SettingsSingleton.getInstance().getFrequency(), 1);
            soundHandler.write(soundData, 0, soundData.length);
         }
 
@@ -80,9 +80,7 @@ public class Driver {
         int sampleRate = 44100;
         soundData = new byte[sampleRate * duration];
         for (int i = 0; i < soundData.length; i++) {
-            byte sample = (byte) (
-                    Math.sin(2 * Math.PI * frequency * i / sampleRate) *
-                            255);
+            byte sample = (byte) ( Math.sin(2 * Math.PI * frequency * i / sampleRate) * 255);
             soundData[i] = sample;
         }
     }
