@@ -16,6 +16,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * LoginActivity.java
+ *      The purpose of this class is to populate the screen with information regarding login for returning users.
+ *      Additionally it links to the SignUpActivity, terminating itself so that first time users may create an account.
+ *      It performs standard input checking prior to submission, alerting the user if something is missing.
+ *      Upon successful sign in the activity ends and the user returns to the landing page.
+ *      If somehow a user who is already logged in were to reach this page it would terminate, post a message, and redirect to the prior activity.
+ *
+ * References (Also mentioned in the README.md):
+ *      https://firebase.google.com/docs/android/setup
+ *
+ *      @author George Faraj B00638341
+ */
+
 public class LoginActivity extends AppCompatActivity {
 
     private Button btn_login,btn_register;
@@ -77,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                // https://firebase.google.com/docs/auth/android/password-auth
                 userAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override

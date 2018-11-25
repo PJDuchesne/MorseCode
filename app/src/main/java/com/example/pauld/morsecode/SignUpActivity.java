@@ -18,6 +18,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * SignUpActivity.java
+ *      The purpose of this class is to populate the screen with information/tools regarding registration for first time users.
+ *      Upon successful account creation in the activity ends and the user returns to the landing page.
+ *      If somehow a user who is already has an account tries to create a new account with the same credentials or invalid credentials an error message is displayed.
+ *
+ * References (Also mentioned in the README.md):
+ *      https://firebase.google.com/docs/android/setup
+ *
+ *      @author George Faraj B00638341
+ */
+
 public class SignUpActivity extends AppCompatActivity {
 
     private Button btn_signUp;

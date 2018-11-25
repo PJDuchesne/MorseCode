@@ -12,6 +12,17 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+/**
+ * textToMorseActivity.java
+ *      The purpose of this class is to populate the screen with information/tools for translating text to MorseCode.
+ *      The user simply selects the TextEdit object at the bottom of the screen and enters text they wish to see displayed in Morse.
+ *      Once the user clicks the Generate Morse function the Activity will begin outputting Morse feedback based on the settings.
+ *
+ *      To accomplish this the MorseBrain is instantiated with the relevant TextView elements and Driver class.
+ *      The onClick listener of the Generate Morse function simply calls the outputMorse function of the MorseBrain.
+ *
+ *      @author George Faraj B00638341
+ */
 public class textToMorseActivity extends AppCompatActivity {
 
     private Button btn_generate;

@@ -7,10 +7,43 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Vibrator;
-// TODO @George: Formalize these references
-//https://progur.com/2016/12/how-to-create-8-bit-music-on-android.html
-//https://www.soundjay.com/beep-sounds-1.html
-//https://stackoverflow.com/questions/27420594/android-5-camera2-use-only-flash
+
+/**
+ * Driver.java
+ *      The purpose of this class is to provide other classes with access to the forms of output available to the device
+ *      Namely the light feedback (phone's front facing flash), haptic feedback (device's vibrator), and sound feedback (using the phones sound system).
+ *
+ * Methods Provided:
+ *  void on()
+ *  void off()
+ *
+ * References (Also mentioned in the README.md):
+ *      https://progur.com/2016/12/how-to-create-8-bit-music-on-android.html
+ *      https://developer.android.com/reference/android/hardware/camera2/CameraManager
+ *
+ *      @author George Faraj B00638341
+ */
+
+/*
+    Note on testing:
+    To ensure that the output could be set to on and off quickly the following loop was used.
+
+    for(int i = 0;i<5;i++){
+        try {
+            d.on();
+            Log.d("SOUND","ON"+i);
+            Thread.sleep(100);
+            d.off();
+            Log.d("SOUND","OFF"+i);
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    It was called on one of the dummy activities created for low level function testing.
+*/
+
 public class Driver {
 
     private Vibrator vibrateHandler;
@@ -38,10 +71,16 @@ public class Driver {
         }
     }
 
+    /**
+     * Public method on()
+     *  This method will start playing the tone generated, turn on the flashlight and start the haptic feedback.
+     *  Whether these components turn on or not is based on the phones capabilities and the options selected in the SettingSingleton.
+     */
     public void on(){
         if(SettingsSingleton.getInstance().getHapticEnabled()){
             vibrateHandler.vibrate(999999999 );
         }
+
         if(soundHandler.getPlayState() != AudioTrack.PLAYSTATE_PLAYING && SettingsSingleton.getInstance().getSoundEnabled()){
             soundHandler.play();
         }
@@ -56,8 +95,15 @@ public class Driver {
         }
     }
 
+    /**
+     * Public method off()
+     *  This method turn off the phone's flashlight, stop the phone from vibrating and mute sound being generated.
+     *  Note: the pause() -> flush() -> stop() -> write() flow of the soundHandler ensures that the sound stops immediately and starts exactly as it did before.
+     *  This is necessary to keep other classes from needing to re-instantiate the Driver object whenever the preferred frequency settings are changed.
+     */
     public void off(){
         vibrateHandler.cancel();
+
         if(soundHandler.getPlayState() == AudioTrack.PLAYSTATE_PLAYING){
            soundHandler.pause();
            soundHandler.flush();

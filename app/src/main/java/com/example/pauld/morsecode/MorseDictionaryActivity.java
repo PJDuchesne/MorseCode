@@ -13,6 +13,18 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * MorseDictionaryActivity.java
+ *      The purpose of this class is to populate the GridView presented to the user with all alphanumerical characters available
+ *       and their Morse representation.
+ *
+ *      This is achieved by simply populating an ArrayList of Strings with the data in MorseCodeStandards
+ *       and using the GridView setArrayAdapter function to populate the view.
+ *
+ *      @author George Faraj B00638341
+ */
+
+
 import java.util.ArrayList;
 
 public class MorseDictionaryActivity extends AppCompatActivity {
