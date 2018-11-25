@@ -1,13 +1,14 @@
 # Identification
 MorseCode App, CSCI 4176 Mobile Computing Project (Fall 2018)
 Group 16:
-*Dinesh Sai Bayireddi   B00791584
-*George Faraj           B00638341
-*Paul Duchesne          B00332119
-*Samarth Raval          B00812673
-*Tom Smith              B00694293
+* Dinesh Sai Bayireddi   B00791584
+* George Faraj           B00638341
+* Paul Duchesne          B00332119
+* Samarth Raval          B00812673
+* Tom Smith              B00694293
 
 For questions about this project send an email to [Paul](mailto:paulduchesne1337@gmail.com).
+
 This project used GitHub for version control and can be accessed [here](https://github.com/PJDuchesne/MorseCode).
 
 # Project Summary
@@ -18,7 +19,7 @@ The application allows the user to .... This greatly....
 
 
 ## Libraries
-**Components Libraries ():** The
+**Components Libraries (Button,TextView,):** The
 
 **camera2/CameraManager :** It can also be used to convert a JSON string to an equivalent Java object. Source [here](https://github.com/google/gson)
 
@@ -67,16 +68,16 @@ private void generateSound(int frequency, int duration) {
 
 
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![Morse Trie Search Algorithm](https://github.com/PJDuchesne/MorseCode/blob/georgeRefactor/ProjectDocumentation/MorseTrieBranchAlgorithm_Diagram.png "Morse Trie Search")
 
 ## Feature Section
 List all the main features of your application with a brief description of each feature.
 
-User Login:
-
 Morse Feedback:
 
+Morse Translation:
 
+User Account System:
 
 ## Final Project Status
 Write a description of the final status of the project. Did you achieve all your goals? What would be the next step for this project (if it were to continue)?
@@ -84,21 +85,21 @@ Overall the project was a success, asdadsalsakda
 
 Our original scope of the applications intended functionality is as follows:
 
-
 #### Minimum Functionality
-- Feature 1 name (Completed)
-- Feature 2 name (Partially Completed)
-- Feature 3 (Not Implemented)
+- Input Morse code as taps and display corresponding text. (Completed)
+- Take input text and translate it into Morse code as text, audio, and haptic feedback. (Completed)
+- Provide an options page to modify timing parameters for Morse code I/O. (Completed)
 
 #### Expected Functionality
-- Feature 1 name (Completed)
-- Feature 2 name (Partially Completed)
-- Feature 3 (Not Implemented)
+- Training course for learning Morse code (With a minimum of 5 lessons). (Completed)
+- User login and corresponding database, which stores basic analytics. (Completed)
+- Output Morse code as light using the phone’s flashlight. (Completed)
 
 #### Bonus Functionality
-- Feature 1 name (Completed)
-- Feature 2 name (Partially Completed)
-- Feature 3 (Not Implemented)
+- Advanced account analytics. (Completed)
+- Utilize Google’s audio and visual API to provide audio and visual inputs. (Completed)
+- Implement two-way Morse Code communication between two phones. (Completed)
+- Provide an option to input Morse code as light. (Completed)
 
 ## Sources
 What to include in your project sources:
