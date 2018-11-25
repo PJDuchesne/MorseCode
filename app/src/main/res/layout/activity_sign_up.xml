@@ -52,6 +52,7 @@
         android:textSize="25sp"
         android:ems="10" />
 
+    <!--Adding the oval shape of the button that is inside drawable/oval_button-->
     <Button
         android:id="@+id/btn_signUp"
         android:layout_width="wrap_content"

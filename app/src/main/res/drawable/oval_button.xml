@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--To create an oval shaped button
+we took the reference from stackoverflow.com
+https://stackoverflow.com/questions/42777682/how-to-make-oval-button-in-android-->
+
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="116dp"
     android:layout_height="46dp"
@@ -7,6 +12,7 @@
     android:layout_marginTop="135dp"
     android:shape="rectangle">
 
+    <!--It will modify the radius of the corners in rectangle -->
     <corners
         android:bottomLeftRadius="30dp"
         android:bottomRightRadius="30dp"
