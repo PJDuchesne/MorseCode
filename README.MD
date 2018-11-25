@@ -18,12 +18,12 @@ The main concept behind this application is to provide a method for users to bet
 The key features of this application include, allow the user to translate text to Morse code and vice versa, and follow a set series of lessons to learn Morse code.
 The progress of the aforementioned lessons can be tracked if the users makes an account (another key feature of the application).
 The way the lessons work is by introducing text and have the user tap it into the phone as Morse. The text that gets presented to the user becomes more complex as the user progresses through the different lessons.
-The applications UI was designed to not include the default action bar and customized to still feel like an android application.
+The application's UI was designed to not include the default action bar and customized to still feel like an android application.
 The UI design combined with the methods for free style input and translation was intended to encourage a certain level of immersion and hopefully boost the user's learning experience.
 
 ## Libraries
 **Components/Widget Libraries (Button,TextView,ListView,ProgressBar ...):** This project makes use of several components and widgets native to Android.
-The code for interacting with these were a result of what was learned in the CSCI 4176 labs, prior experience with Android application development and .
+The code for interacting with these were a result of what was learned in the CSCI 4176 labs and prior experience with Android application development.
 
 **camera2/CameraManager :** The CameraManager is part of the hardware library native to Android and was used to generate visual feedback via the front facing flashlight most Android devices have. This was achieved with the setTorchMode function, source [here](https://developer.android.com/reference/android/hardware/camera2/CameraManager)
 
@@ -56,7 +56,7 @@ public static VOID THING(VOID * THING?) {
 // Source: YOUR MIND
 ```
 
-**Problem 2: Using custom made sounds with varying frequency**
+**Problem 2: Using Custom Made Sounds With Varying Frequency**
 
 Since outputting sound from a static MP3/WAV file limits user freedom the AudioTrack library to generate tones of varying frequencies.
 Despite the online documentation provided by android on this library it's usage was tricky as it required generating an array of bytes that represent sound waves.
@@ -157,6 +157,9 @@ What to include in your project sources:
 - Everything listed on the Dalhousie Plagiarism and Cheating pages(https://www.dal.ca/dept/university_secretariat/academic-integrity/plagiarism-cheating.html)
 
 [1] "How to Create 8-bit Music on Android", progur.com, 11 December 2016. [Online]. Available: https://progur.com/2016/12/how-to-create-8-bit-music-on-android.html.
+
 [2] "Android Camera2 Library Documentation", developer.android.com, 6 June 2018. [Online]. Available: https://developer.android.com/reference/android/hardware/camera2/CameraManager
+
 [3] "StackOverflow Checking Flash Post", stackoverflow.com, 12 November 2012. [Online] Available: https://stackoverflow.com/questions/13413938/how-to-check-if-device-has-flash-light-led-android
+
 [4] "Android Hardware Features Documentation", developer.android.com, 20 November 2018. [Online] Available: https://developer.android.com/guide/topics/manifest/uses-feature-element#hw-features
