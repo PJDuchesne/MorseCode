@@ -1,15 +1,19 @@
 package com.example.pauld.morsecode;
 
-import android.util.Log;
-
+/**
+ * MorseCodeStandards
+ *     This class holds the International Morse code table, with each table entry holding the
+ *     character, its Morse translation, and the next character it iterates to. This table is used
+ *     by the MorseTrieBranch constructor class to recursively create a MorseTrie.
+ *
+ *     @author Paul Duchesne B00332119
+ **/
 public class MorseCodeStandards {
-
-    // Todo: GET function based on current user settings
 
     // 0 -> ASCII Character
     // 1 -> Morse Code Characters
-    // 2 -> DOT  (•)
-    // 3 -> DASH (-)
+    // 2 -> Next Character if a DOT (•) is added
+    // 3 -> Next Character if a DASH (-) is added
     public final static String InternationalStandard[][] = {
             {"",  "",      "E", "T"}, // Empty is actually a space
             {"A", "•-",    "R", "W"}, // 1st entry for start of letters
@@ -50,13 +54,12 @@ public class MorseCodeStandards {
             {"9", "----•", "?", "?"},
 
             // Three special branches to lead to some numbers
-            // TODO: Maybe not display ???
             {" ", "••--", "?", "2"}, // Branch leading to 2         // Coming from U
             {" ", "---•", "8", "?"}, // Branch leading to 8         // Coming from O
             {" ", "----", "9", "0"}, // Branch leading to 9 && 0    // Coming from O
 
-            // General Confusion branch
-            {"?", "",      "?", "?"} // TODO: Add links to go down and meet 0-9
+            // General Confusion branch (Linked to branches at the bottom of the Trie)
+            {"?", "", "?", "?"}
     };
     private final static int InternationalLength = InternationalStandard.length;
 
@@ -83,7 +86,6 @@ public class MorseCodeStandards {
 
     public static int GetRowNotSpecial(char InputChar) {
         int InputInt = (int)(Character.toUpperCase(InputChar));
-//        Log.e("[GetRow]: ", "InputInt >>" + InputInt + "<<");
 
         // It's a number
         if (InputInt >= 48 && InputChar <= 57) {
@@ -99,46 +101,6 @@ public class MorseCodeStandards {
             return -1;
         }
     }
-
-    // TODO: Continental Standard
-    public final static String ContinentalStandard[][] = {
-            {"A", ""},
-            {"B", ""},
-            {"C", ""},
-            {"D", ""},
-            {"E", ""},
-            {"F", ""},
-            {"G", ""},
-            {"H", ""},
-            {"I", ""},
-            {"J", ""},
-            {"K", ""},
-            {"L", ""},
-            {"M", ""},
-            {"N", ""},
-            {"O", ""},
-            {"P", ""},
-            {"Q", ""},
-            {"R", ""},
-            {"S", ""},
-            {"T", ""},
-            {"U", ""},
-            {"V", ""},
-            {"W", ""},
-            {"X", ""},
-            {"Y", ""},
-            {"Z", ""},
-            {"0", ""},
-            {"1", ""},
-            {"2", ""},
-            {"3", ""},
-            {"4", ""},
-            {"5", ""},
-            {"6", ""},
-            {"7", ""},
-            {"8", ""},
-            {"9", ""}
-    };
 
     static public String GiveLetterGetMorse(String inputCharButActuallyString) {
         int tmpIndex = GetRowNotSpecial(Character.toUpperCase(inputCharButActuallyString.charAt(0)));

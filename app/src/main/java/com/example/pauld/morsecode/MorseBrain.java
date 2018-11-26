@@ -14,6 +14,15 @@ import java.util.TimerTask;
 
 import static com.example.pauld.morsecode.MorseCodeStandards.GiveLetterGetMorse;
 
+/**
+ * MorseBrain
+ *     This class is responsible for all logic related to inputting and outputting Morse code
+ *     from activities. By handing in textViews and signalling when the user starts and ends
+ *     inputs, the inputs are parsed into Morse code. When outputting, a recursive function
+ *     is used to iterate through input characters and output the relevant symbols.
+ *
+ *     @author Paul Duchesne B00332119
+ **/
 public class MorseBrain {
     // Local variables
     private Timer morseTimer;
@@ -53,13 +62,6 @@ public class MorseBrain {
 
     public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView,
                       TextView inputOverallTextView, ProgressBar inputProgressBar,
-                      Driver inputDriver, boolean endOfCharTaskFlag, boolean endOfWordTaskFlag) {
-        InitializeBrain(context, inputMorseTextView, inputCharTextView, inputOverallTextView,
-                        inputProgressBar, inputDriver, endOfCharTaskFlag, endOfWordTaskFlag);
-    }
-
-    public MorseBrain(Context context, TextView inputMorseTextView, TextView inputCharTextView,
-                      TextView inputOverallTextView, ProgressBar inputProgressBar,
                       Driver inputDriver) {
 
         InitializeBrain(context, inputMorseTextView, inputCharTextView, inputOverallTextView,
@@ -71,7 +73,6 @@ public class MorseBrain {
                                  ProgressBar inputProgressBar, Driver inputDriver,
                                  boolean endOfCharTaskFlag, boolean endOfWordTaskFlag) {
 
-//        InternationalStandardTrie = new MorseTrie(MorseCodeStandards.InternationalStandard);
         InternationalStandardTrie = new MorseTrie();
         morseTextView = inputMorseTextView;
         charTextView = inputCharTextView;
@@ -89,12 +90,9 @@ public class MorseBrain {
         EndOfCharTaskOn = endOfCharTaskFlag;
         EndOfWordTaskOn = endOfWordTaskFlag;
 
-        // TODO: Write a fresh button that checks for updates in the above 2 flags and this time
-        // that is called from outside the brain
-        timeUnit = 100; // TODO: Get from settings (PARIS standard is 50 ms)
-
         feedbackDriver = inputDriver;
 
+        // Reset a number of other variables
         ElectricShock();
     }
 
