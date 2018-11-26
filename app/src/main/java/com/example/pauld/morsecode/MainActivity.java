@@ -20,6 +20,18 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * MainActivity.java
+ *
+ *  The purpose of this activity is to act as a landing page for the application.
+ *  It provides access to all key features via buttons which on click will redirect to the appropriate activity.
+ *
+ * References (Also mentioned in the README.md):
+ *      https://firebase.google.com/docs/android/setup
+ *
+ *  @author Samarth Raval B00812673
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseUser user;
@@ -40,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         btn_morse_to_txt = findViewById(R.id.btn_main_morse_to_text);
         btn_settings     = findViewById(R.id.btn_main_settings);
 
+        //On Button pressed LOGIN Screen will open
         loginListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        //On Button pressed LESSONS Screen will open
         btn_lessons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //On Button pressed TEXT TO MORSE Screen will open
         btn_txt_to_morse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //On Button pressed MORSE TO TEXT Screen will open
         btn_morse_to_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //On Button pressed SETTINGS Screen will open
         btn_settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

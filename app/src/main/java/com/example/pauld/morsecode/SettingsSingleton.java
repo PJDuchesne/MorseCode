@@ -1,5 +1,17 @@
 package com.example.pauld.morsecode;
 
+/**
+ * SettingsSingleton.java
+ *
+ * This singleton is meant to hold information regarding the current users preferences.
+ * It is updated solely by the SettingsActivity and accessed by several others to update the applications behavior.
+ *
+ * References:
+ *      CSCI 4176 Labs
+ *
+ *  @author Dinesh Sai Bayireddi B00791584
+ */
+
 public class SettingsSingleton {
     private static volatile SettingsSingleton sInstance;
     public boolean hapticEnabled=true;
@@ -23,6 +35,8 @@ public class SettingsSingleton {
         }
         return sInstance;
     }
+
+    //Functions to get/set input methods,sound frequency and input speed
 
     public void setHapticEnabled(boolean hapticEnabled){
         this.hapticEnabled=hapticEnabled;

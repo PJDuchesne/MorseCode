@@ -7,7 +7,18 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 
+/**
+ * SettingsActivity.java
+ *
+ *  The purpose of this activity is to provide tools to the user to modify the applications behaviour.
+ *  Modifications include turning off haptic, sound and/or light feedback as well as change the sound frequency and pauses between dots and dashes.
+ *  This is the only class that will use the SettingSingleton Setters.
+ *
+ *  @author Dinesh Sai Bayireddi B00791584
+ */
+
 public class SettingsActivity extends AppCompatActivity {
+    // Local variables
     private SettingsSingleton s;
     private SeekBar iSpeed,frequency;
     private Switch light,haptic,sound;
@@ -15,15 +26,15 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        iSpeed = findViewById(R.id.seekBar);
-        frequency = findViewById(R.id.seekBar2);
+        iSpeed = findViewById(R.id.touchSpeed);
+        frequency = findViewById(R.id.frequencySeekBar);
         haptic = findViewById(R.id.haptic);
         sound = findViewById(R.id.sound);
         light = findViewById(R.id.light);
 
         s = SettingsSingleton.getInstance();
 
-        frequency.setProgress(s.getFrequency()/40 - 10);
+        frequency.setProgress(s.getFrequency()/40 - 11);
         iSpeed.setProgress(s.getInputSpeed());
         haptic.setChecked(s.getHapticEnabled());
         sound.setChecked(s.getSoundEnabled());
@@ -38,11 +49,12 @@ public class SettingsActivity extends AppCompatActivity {
         haptic = findViewById(R.id.haptic);
         sound = findViewById(R.id.sound);
         light = findViewById(R.id.light);
-        iSpeed = findViewById(R.id.seekBar);
-        frequency = findViewById(R.id.seekBar2);
+        iSpeed = findViewById(R.id.touchSpeed);
+        frequency = findViewById(R.id.frequencySeekBar);
         s = SettingsSingleton.getInstance();
 
-
+        //check switch and seekbar states on settings activity
+        // and set global variables in settings singleton
         haptic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -109,14 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
         frequency.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (i > 0 && i <= 12) {
-                    s.setFrequency(440+((i-1)*40));
-                }
-                else
-                {
-                    s.setFrequency(0);
-                }
-
+                s.setFrequency(440+i*40);
             }
 
             @Override

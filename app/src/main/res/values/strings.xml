@@ -46,7 +46,7 @@
     <string name="soundSetting">Sound</string>
     <string name="lightSetting">Light</string>
     <string name="soundFreqSetting">Sound Frequency</string>
-    <string name="speedSetting">Input / Output Setting</string>
+    <string name="speedSetting">Input / Output Speed Setting</string>
 
     <string name="defaultText">Default Text</string>
     <string name="defaultChar1">L</string>
