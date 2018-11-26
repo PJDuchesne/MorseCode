@@ -12,10 +12,10 @@
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/TrainingScreenNextWordMarginTop"
-        android:textColor="@color/colorOrangeAccent"
-        android:textSize="@dimen/FreestyleCurrentInputSize"
         android:text="Default"
-        />
+        android:textColor="@color/colorOrangeAccent"
+        android:lines="1"
+        android:textSize="@dimen/FreestyleCurrentInputSize" />
 
     <Button
         android:id="@+id/freestyle_add_letter_btn"

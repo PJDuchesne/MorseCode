@@ -5,7 +5,7 @@
  *      and are space separated. Utilizes a morse brain for the backend morse
  *      processing.
  *
- *      @TomSmith B00694293
+ *      @author TomSmith B00694293
  * */
 
 package com.example.pauld.morsecode;
