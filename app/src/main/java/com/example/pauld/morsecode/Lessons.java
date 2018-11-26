@@ -1,3 +1,11 @@
+/**
+ * Lessons.java
+ *      The purpose of this screen is to provide the user with a
+ *      list of lessons to complete and generate the lesson screen.
+ *
+ *      @TomSmith B00694293
+ * */
+
 package com.example.pauld.morsecode;
 
 import android.content.Intent;

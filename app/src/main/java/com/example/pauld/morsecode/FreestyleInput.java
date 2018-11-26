@@ -1,3 +1,12 @@
+/**
+ * FreestyleInput.java
+ *      The purpose of this class is to provide the backend for the freestyle input
+ *      page. This class utilizes a morseBrain to handle the morse processing, and
+ *      simply provides the UI.
+ *
+ *      @TomSmith B00694293
+ * */
+
 package com.example.pauld.morsecode;
 
 import android.content.Context;

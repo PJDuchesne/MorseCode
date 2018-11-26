@@ -1,3 +1,13 @@
+/**
+ * TrainingScreen.java
+ *      The training screen provides the user with the screen which
+ *      they perform lessons on. These lesson plans are input through the intent
+ *      and are space separated. Utilizes a morse brain for the backend morse
+ *      processing.
+ *
+ *      @TomSmith B00694293
+ * */
+
 package com.example.pauld.morsecode;
 
 import android.content.Context;
