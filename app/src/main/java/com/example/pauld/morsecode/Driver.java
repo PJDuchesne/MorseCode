@@ -13,10 +13,6 @@ import android.os.Vibrator;
  *      The purpose of this class is to provide other classes with access to the forms of output available to the device
  *      Namely the light feedback (phone's front facing flash), haptic feedback (device's vibrator), and sound feedback (using the phones sound system).
  *
- * Methods Provided:
- *  void on()
- *  void off()
- *
  * References (Also mentioned in the README.md):
  *      https://progur.com/2016/12/how-to-create-8-bit-music-on-android.html
  *      https://developer.android.com/reference/android/hardware/camera2/CameraManager
