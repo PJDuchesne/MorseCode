@@ -10,7 +10,8 @@ Group 16:
 
 For questions about this project send an email to [Paul](mailto:paulduchesne1337@gmail.com).
 
-This project used GitHub for version control and can be accessed [here](https://github.com/PJDuchesne/MorseCode).
+This project used GitHub for version control and can be accessed [here](https://github.com/PJDuchesne/MorseCode). The only marker with a Github account is listed below.
+* Abhishek Kumar Singh (ab649582@dal.ca)
 
 # Project Summary
 
